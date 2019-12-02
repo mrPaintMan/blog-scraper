@@ -1,0 +1,31 @@
+id,title,link
+201910180000,Minecraft Java Edition- Snapshot 19W46A,/hc/en-us/articles/360036209711-Minecraft-Java-Edition-Snapshot-19W46A
+201910110000,Minecraft Java Edition- Snapshot 19W45A,/hc/en-us/articles/360035648212-Minecraft-Java-Edition-Snapshot-19W45A
+2019100100000,Minecraft Java Edition- Snapshot 19W44A,/hc/en-us/articles/360035706771-Minecraft-Java-Edition-Snapshot-19W44A
+201909200000,Minecraft: Java Edition - Snapshot 19W42A,/hc/en-us/articles/360034877672-Minecraft-Java-Edition-Snapshot-19W42A
+201909130000,Minecraft: Java Edition - Snapshot 19W41A,/hc/en-us/articles/360034618512-Minecraft-Java-Edition-Snapshot-19W41A
+201909090000,Minecraft: Java Edition - Snapshot 19W40A,/hc/en-us/articles/360034707851-Minecraft-Java-Edition-Snapshot-19W40A
+201909010000,Minecraft: Java Edition - Snapshot 19W39A,/hc/en-us/articles/360034174292-Minecraft-Java-Edition-Snapshot-19W39A
+201908230000,Minecraft: Java Edition - Snapshot 19W38B,/hc/en-us/articles/360033496792-Minecraft-Java-Edition-Snapshot-19W38B
+201908160000,Minecraft: Java Edition - Snapshot 19W37A,/hc/en-us/articles/360033640551-Minecraft-Java-Edition-Snapshot-19W37A
+201908080000,Minecraft: Java Edition - Snapshot 19W36A,/hc/en-us/articles/360032993092-Minecraft-Java-Edition-Snapshot-19W36A
+201908080000,Minecraft: Java Edition - Snapshot 19W35A,/hc/en-us/articles/360033026471-Minecraft-Java-Edition-Snapshot-19W35A
+201907250000,Minecraft: Java Edition - Snapshot 19W34A,/hc/en-us/articles/360032831011-Minecraft-Java-Edition-Snapshot-19W34A
+N/A,Minecraft: Java Edition - 1.14.4 PRE-RELEASE 7,/hc/en-us/articles/360030491732-Minecraft-Java-Edition-1-14-4-PRE-RELEASE-7
+N/A,Minecraft: Java Edition - 1.14.4 PRE-RELEASE 3,/hc/en-us/articles/360030339032-Minecraft-Java-Edition-1-14-4-PRE-RELEASE-3
+N/A,Minecraft: Java Edition - 1.14.4 PRE-RELEASE 2,/hc/en-us/articles/360030412391-Minecraft-Java-Edition-1-14-4-PRE-RELEASE-2
+N/A,Minecraft: Java Edition - 1.14.4 PRE-RELEASE 1,/hc/en-us/articles/360030412311-Minecraft-Java-Edition-1-14-4-PRE-RELEASE-1
+N/A,Minecraft: Java Edition - 1.14.3 PRE-RELEASE 2,/hc/en-us/articles/360029074071-Minecraft-Java-Edition-1-14-3-PRE-RELEASE-2
+N/A,Minecraft: Java Edition - 1.14.2 PRE-RELEASE 4,/hc/en-us/articles/360028498411-Minecraft-Java-Edition-1-14-2-PRE-RELEASE-4
+N/A,Minecraft: Java Edition - 1.14 PRE2,/hc/en-us/articles/360027735772-Minecraft-Java-Edition-1-14-PRE2
+N/A,Minecraft: Java Edition - 1.14 PRE-RELEASE 5,/hc/en-us/articles/360026407492-Minecraft-Java-Edition-1-14-PRE-RELEASE-5
+201903030000,Minecraft: Java Edition - Snapshot 19W14B,/hc/en-us/articles/360026240951-Minecraft-Java-Edition-Snapshot-19W14B
+201903010000,Minecraft: Java Edition - Snapshot 19W13B,/hc/en-us/articles/360025595772-Minecraft-Java-Edition-Snapshot-19W13B
+201902230000,Minecraft: Java Edition - Snapshot 19W12B,/hc/en-us/articles/360025668532-Minecraft-Java-Edition-Snapshot-19W12B
+201902160000,Minecraft: Java Edition - Snapshot 19W11A,/hc/en-us/articles/360024978852-Minecraft-Java-Edition-Snapshot-19W11A
+201902020000,Minecraft: Java Edition - Snapshot 19W09A,/hc/en-us/articles/360024634331-Minecraft-Java-Edition-Snapshot-19W09A
+201901250000,Minecraft: Java Edition - Snapshot 19W08B,/hc/en-us/articles/360023928672-Minecraft-Java-Edition-Snapshot-19W08B
+201901180000,Minecraft: Java Edition - Snapshot 19W07A,/hc/en-us/articles/360023368831-Minecraft-Java-Edition-Snapshot-19W07A
+201901110000,Minecraft: Java Edition - Snapshot 19W06A,/hc/en-us/articles/360023016591-Minecraft-Java-Edition-Snapshot-19W06A
+201901010000,Minecraft: Java Edition - Snapshot 19W05A,/hc/en-us/articles/360022636591-Minecraft-Java-Edition-Snapshot-19W05A
+201900270000,Minecraft: Java Edition - Snapshot 19W04B,/hc/en-us/articles/360022213852-Minecraft-Java-Edition-Snapshot-19W04B
