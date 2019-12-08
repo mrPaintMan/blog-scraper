@@ -7,8 +7,7 @@ SCRAPERS = {
 }
 
 scraper = SCRAPERS[os.environ["SCRAPER"]]
-use_web = os.getenv("USEWEB", False)
 
-entries_scraped = scraper.scrape(use_web)
+entries_scraped = scraper.scrape()
 
 print("Scraped {} entries".format(entries_scraped))
