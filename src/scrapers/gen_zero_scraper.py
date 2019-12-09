@@ -2,7 +2,6 @@ from src.scrapers.abstract_scraper import make_soup, write_datafile
 
 WEBSITE = "https://generationzero.com/en/blog"
 FILENAME = "../resources/data/gen_zero.txt"
-INPUT_FILE = "../resources/input_files/gen_zero.html"
 
 
 def scrape():
