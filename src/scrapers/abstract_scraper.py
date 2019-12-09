@@ -1,6 +1,9 @@
 from bs4 import BeautifulSoup
 import urllib
 import urllib.request
+import os
+
+STATIC_FILE = "../resources/input_files/static_page.html"
 
 
 def make_soup(url):
@@ -13,9 +16,18 @@ def make_soup(url):
                'Accept-Language': 'en-US,en;q=0.8',
                'Connection': 'keep-alive'}
     req = urllib.request.Request(url=url, headers=headers)
-    thepage = urllib.request.urlopen(req)
-    thesoup = BeautifulSoup(thepage, "html.parser")
-    return thesoup
+    the_page = urllib.request.urlopen(req)
+    the_soup = BeautifulSoup(the_page, "html.parser")
+    return the_soup
+
+
+def make_local_soup():
+    if os.stat(STATIC_FILE).st_size > 0:
+        the_page = open(STATIC_FILE, "r")
+    else:
+        raise ValueError("static_page.html is empty! Fill it with html and try again.")
+    the_soup = BeautifulSoup(the_page, "html.parser")
+    return the_soup
 
 
 def write_datafile(data, file_name):
