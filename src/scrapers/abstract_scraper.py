@@ -3,7 +3,7 @@ import urllib
 import urllib.request
 import os
 
-STATIC_FILE = "../resources/input_files/static_page.html"
+STATIC_FILE = "not-implemented"
 
 
 def make_soup(url):
