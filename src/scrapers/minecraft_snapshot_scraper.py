@@ -46,7 +46,7 @@ def get_date(soup):
             if len(words[0]) == 1:
                 words[0] = "0" + words[0]
             date = words[2] + MONTHS[words[1].lower()] + words[0]
-            date = re.sub(r"\D", "", date)
+            date = re.sub(r"\D", "", date) + "0000"
             break
 
     return date
