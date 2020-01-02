@@ -2,7 +2,6 @@ import pg8000
 
 
 class Db:
-    DEFAULT_CONN_STR = "filippalmqvist;filippalmqvist;/tmp/.s.PGSQL.5432"
 
     def __init__(self, conn_string):
         conn_strings = conn_string.split(';')
@@ -10,8 +9,8 @@ class Db:
             user=conn_strings[0],
             password=conn_strings[1],
             database="blogscraper",
-            host="localhost",
-            port=5432
+            host=conn_strings[2],
+            port=int(conn_strings[3])
         )
 
         self.cur = self.conn.cursor()
