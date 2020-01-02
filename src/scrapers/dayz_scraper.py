@@ -1,10 +1,15 @@
 from bs4 import BeautifulSoup
-from src.scrapers.abstract_scraper import make_soup, write_datafile
 from selenium import webdriver
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as ec
+from src.lib.model.post import Post
 
+SOURCE_CODE = "dayz"
 WEBSITE = "https://dayz.com/search?rowsPerPage=5"
 BASESITE = "https://dayz.com"
 FILENAME = "../resources/data/dayz.txt"
+XPATH_TO_FIRST_POST = "//div[1][@class='content']//a[@class='link']"
 MONTHS = {
     "jan": "01",
     "feb": "02",
@@ -37,13 +42,23 @@ def get_articles(articles, soup, driver):
 
     while True:
         pagination = driver.find_element_by_class_name("paginate__item--arrow-right")
+        old_name = driver.find_element_by_xpath(XPATH_TO_FIRST_POST).text
 
         for post in soup.find_all("div", {"class": "content"}):
             articles.append(post)
 
         if "paginate__item--arrow-disabled" not in pagination.get_attribute("class"):
+
             pagination.find_element_by_class_name("butn").click()
+            WebDriverWait(driver, 5).until_not(
+                ec.text_to_be_present_in_element(
+                    (By.XPATH, XPATH_TO_FIRST_POST),
+                    old_name
+                )
+            )
+
             soup = BeautifulSoup(driver.page_source, "html.parser")
+
         else:
             break
 
@@ -51,7 +66,6 @@ def get_articles(articles, soup, driver):
 
 
 def scrape():
-
     # Setup selenium
     options = webdriver.ChromeOptions()
     options.add_argument('--ignore-certificate-errors')
@@ -67,10 +81,10 @@ def scrape():
     # Get each individual entry
     articles = get_articles(articles, soup, driver)
     for article in articles:
-        link = BASESITE + article.find("a").get("href")
+        link = BASESITE + article.find(lambda tag: tag.name == 'a' and tag.get('class') == ['link']).get("href")
         date = article.find("time").text.strip().replace('-', '') + "0000"
         title = article.find("h1").text.strip()
 
-        data.append({"id": conform_date(date), "title": title, "link": link})
+        data.append(Post(None, conform_date(date), title, link, SOURCE_CODE, None))
 
-    return write_datafile(data, FILENAME)
+    return data

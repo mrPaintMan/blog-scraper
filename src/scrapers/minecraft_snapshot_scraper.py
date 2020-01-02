@@ -1,6 +1,8 @@
-from src.scrapers.abstract_scraper import make_soup, write_datafile
+from src.lib.model.post import Post
+from src.scrapers.abstract_scraper import make_soup
 import re
 
+SOURCE_CODE = "minecraft_snapshot"
 WEBSITE = "https://feedback.minecraft.net/hc/en-us/sections/360002267532-Snapshot-Information-and-Changelogs"
 BASE_SITE = "https://feedback.minecraft.net"
 FILENAME = "../resources/data/minecraft_snap.txt"
@@ -38,7 +40,7 @@ def get_date(soup):
     date = None
     date_candidates = soup.find("div", {"class": "article-body"}).findChildren()
 
-    for candidate in date_candidates:
+    for candidate in date_candidates[:10]:
         text = candidate.text.strip()
         words = re.split(r"\s+", text)
 
@@ -56,6 +58,7 @@ def scrape():
     soup = make_soup(WEBSITE)
     articles = []
     data = []
+    dates = []
 
     # Get each individual entry
     articles = get_articles(articles, soup)
@@ -70,6 +73,10 @@ def scrape():
         if date is None:
             continue
 
-        data.append({"id": date, "title": title, "link": link})
+        elif date in dates:
+            date += 1
 
-    return write_datafile(data, FILENAME)
+        dates.append(date)
+        data.append(Post(None, date, title, link, SOURCE_CODE, None))
+
+    return data

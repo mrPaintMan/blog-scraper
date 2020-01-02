@@ -3,6 +3,8 @@ import urllib
 import urllib.request
 import os
 
+from src.lib.model.post import Post
+
 STATIC_FILE = "not-implemented"
 
 
@@ -18,6 +20,7 @@ def make_soup(url):
     req = urllib.request.Request(url=url, headers=headers)
     the_page = urllib.request.urlopen(req)
     the_soup = BeautifulSoup(the_page, "html.parser")
+
     return the_soup
 
 
@@ -27,13 +30,13 @@ def make_local_soup():
     else:
         raise ValueError("static_page.html is empty! Fill it with html and try again.")
     the_soup = BeautifulSoup(the_page, "html.parser")
+
     return the_soup
 
 
-def write_datafile(data, file_name):
-    f = open(file_name, "w")
-    f.write("id,title,link\n")
-    for element in data:
-        f.write("{},{},{}\n".format(element["id"], element["title"], element["link"]))
-    f.close()
-    return len(data)
+def match_data(data):
+    for post in data:
+        if type(post) == Post:
+            post.match()
+
+    return data

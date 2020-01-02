@@ -1,5 +1,7 @@
-from src.scrapers.abstract_scraper import make_soup, write_datafile
+from src.lib.model.post import Post
+from src.scrapers.abstract_scraper import make_soup
 
+SOURCE_CODE = "gen_zero"
 WEBSITE = "https://generationzero.com/en/blog"
 FILENAME = "../resources/data/gen_zero.txt"
 
@@ -14,6 +16,6 @@ def scrape():
         date = post.find("p").text.strip().replace('-', '') + "0000"
         title = post.find("h4").text.strip()
 
-        data.append({"id": date, "title": title, "link": link})
+        data.append(Post(None, date, title, link, SOURCE_CODE, None))
 
-    return write_datafile(data, FILENAME)
+    return data
