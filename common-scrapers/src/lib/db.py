@@ -3,14 +3,13 @@ import pg8000
 
 class Db:
 
-    def __init__(self, conn_string):
-        conn_strings = conn_string.split(';')
+    def __init__(self, host):
         self.conn = pg8000.connect(
-            user=conn_strings[0],
-            password=conn_strings[1],
             database="blogscraper",
-            host=conn_strings[2],
-            port=int(conn_strings[3])
+            user="postgres",
+            password="postgres",
+            host=host,
+            port=5432
         )
 
         self.cur = self.conn.cursor()
