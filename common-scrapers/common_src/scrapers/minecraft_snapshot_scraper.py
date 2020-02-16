@@ -1,5 +1,5 @@
-from src.lib.model.post import Post
-from src.scrapers.abstract_scraper import make_soup
+from common_src.lib.model.post import Post
+from common_src.scrapers.abstract_scraper import make_soup
 import re
 
 SOURCE_CODE = "minecraft_snapshot"

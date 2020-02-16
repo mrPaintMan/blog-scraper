@@ -3,7 +3,7 @@ import urllib
 import urllib.request
 import os
 
-from src.lib.model.post import Post
+from common_src.lib.model.post import Post
 
 STATIC_FILE = "not-implemented"
 
