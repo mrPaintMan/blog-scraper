@@ -1,8 +1,8 @@
 import os
 import sys
 
-from src.lib import db
-from src.scrapers import *
+from common_src.lib import db
+from common_src.scrapers import *
 
 SCRAPERS = {
     "gen_zero": gen_zero_scraper,

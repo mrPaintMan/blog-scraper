@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
-from src.lib.model.post import Post
+from common_src.lib.model.post import Post
 
 SOURCE_CODE = "dayz"
 WEBSITE = "https://dayz.com/search?rowsPerPage=5"
