@@ -7,8 +7,9 @@ from server_src.lib.db import Db
 class Source(Resource):
 
     @classmethod
-    def setup(cls, host):
+    def setup(cls, host, auth):
         cls.db = Db(host)
+        cls.decorators = [auth.login_required]
         return cls
 
     @staticmethod
@@ -44,8 +45,9 @@ class Source(Resource):
 class SourceList(Resource):
 
     @classmethod
-    def setup(cls, host):
+    def setup(cls, host, auth):
         cls.db = Db(host)
+        cls.decorators = [auth.login_required]
         return cls
 
     @staticmethod

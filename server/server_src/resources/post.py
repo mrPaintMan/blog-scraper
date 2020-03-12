@@ -7,8 +7,9 @@ from server_src.lib.db import Db
 class Post(Resource):
 
     @classmethod
-    def setup(cls, host):
+    def setup(cls, host, auth):
         cls.db = Db(host)
+        cls.decorators = [auth.login_required]
         return cls
 
     @staticmethod
@@ -18,11 +19,17 @@ class Post(Resource):
     def get(self, post_id):
         try:
             p_id = int(post_id)
-            print(p_id)
             if p_id < 1:
                 raise ValueError
 
         except ValueError:
+            return {
+                       "status": "400 - Bad request.",
+                       "error": "post_id is invalid. Should be: /posts/{int} and > 0"
+                   }, 400
+
+        except TypeError:
+
             return {
                        "status": "400 - Bad request.",
                        "error": "post_id is missing or invalid. Should be: /posts/{int} and > 0"
@@ -47,8 +54,9 @@ class Post(Resource):
 class PostList(Resource):
 
     @classmethod
-    def setup(cls, host):
+    def setup(cls, host, auth):
         cls.db = Db(host)
+        cls.decorators = [auth.login_required]
         return cls
 
     @staticmethod
@@ -66,10 +74,15 @@ class PostList(Resource):
         except ValueError:
             return {
                        "status": "400 - Bad request.",
-                       "error": "Pagination query parameter is missing or invalid. Should be: ?page={int}"
+                       "error": "Pagination query parameter is invalid. Should be: ?page={int} and >= 0"
+                   }, 400
+        except TypeError:
+            return {
+                       "status": "400 - Bad request.",
+                       "error": "Pagination query parameter is missing or invalid. Should be: ?page={int} and >= 0"
                    }, 400
 
-        if source is not None:
+        if source is not None and source != "None":
             posts = post_model.get_pag_by_source(self.db, page, source)
 
         else:
