@@ -28,7 +28,7 @@ else:
 
 @auth.verify_token
 def verify_token(token):
-    correct_token = open(token_path).read()
+    correct_token = open(token_path).readline().strip()
 
     if token == correct_token:
         return True
