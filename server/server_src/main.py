@@ -13,22 +13,22 @@ auth = HTTPTokenAuth()
 if "ENV" in os.environ:
     ENV = os.environ["ENV"]
     postgres_host = "host.docker.internal" if "DB_HOST" not in os.environ else os.environ["DB_HOST"]
-    token_path = "/resources/auth_token.txt" if "TOKEN_PATH" not in os.environ else os.environ["TOKEN_PATH"]
+    resource_path = "/resources/" if "TOKEN_PATH" not in os.environ else os.environ["TOKEN_PATH"]
 
 elif len(sys.argv) >= 3:
     ENV = sys.argv[1]
     postgres_host = sys.argv[2]
-    token_path = sys.argv[3]
+    resource_path = sys.argv[3]
 
 else:
     ENV = "dev"
     postgres_host = "localhost"
-    token_path = "../../resources/auth_token.txt"
+    resource_path = "../../resources/"
 
 
 @auth.verify_token
 def verify_token(token):
-    correct_token = open(token_path).readline().strip()
+    correct_token = open(resource_path + "auth_token.txt").readline().strip()
 
     if token == correct_token:
         return True
@@ -58,4 +58,5 @@ if __name__ == "__main__":
         app.run(debug=True)
 
     else:
-        app.run(debug=False, host="0.0.0.0")
+        context = (resource_path + "Cloudflare_Origin_CA.crt", resource_path + "Cloudflare_Origin_CA.key")
+        app.run(debug=False, host="0.0.0.0", ssl_context=context)
