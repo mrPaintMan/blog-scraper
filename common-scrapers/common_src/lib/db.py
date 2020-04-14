@@ -6,8 +6,8 @@ class Db:
     def __init__(self, host):
         self.conn = pg8000.connect(
             database="blogscraper",
-            user="postgres",
-            password="postgres",
+            user="app",
+            password="vh38pt94dx",
             host=host,
             port=5432
         )
