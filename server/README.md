@@ -27,7 +27,7 @@ to run:
 ```
 $ docker build -t {image_name} ./server
 $ docker run -d \
-    -p 5000 \
+    -p 5000:5000 \
     -e ENV={env} \
     -e DB_HOST={db_host} \
     -v {absolute_path}:/resources \
