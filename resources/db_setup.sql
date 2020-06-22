@@ -19,3 +19,6 @@ VALUES ('minecraft_snapshot', 'Minecraft snapchot blog', DEFAULT),
        ('dayz', 'Dayz blog', DEFAULT),
        ('gen_zero', 'Minecraft snapchot blog', DEFAULT);
 
+CREATE USER app WITH PASSWORD 'vh38pt94dx';
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO app;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO app;

@@ -38,5 +38,5 @@ $ docker run {see individual application readme}
 Each application requires a local postgresql database, with the following config:
 - port = `5432`
 - database = `blogscraper`
-- user = `postgres`
-- password `postgres`
+- user = `app`
+- password `vh38pt94dx`
