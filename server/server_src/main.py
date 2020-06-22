@@ -3,6 +3,8 @@ import sys
 from flask import Flask
 from flask_restful import Api
 from flask_httpauth import HTTPTokenAuth
+
+from server_src.resources.ci import Ci
 from server_src.resources.post import Post, PostList
 from server_src.resources.source import Source, SourceList
 
@@ -48,14 +50,18 @@ postListApi = PostList.setup(postgres_host, auth)
 sourceApi = Source.setup(postgres_host, auth)
 sourceListApi = SourceList.setup(postgres_host, auth)
 
+# Blog resources
 api.add_resource(postApi, "/blog/posts/<int:post_id>")
 api.add_resource(postListApi, "/blog/posts")
 api.add_resource(sourceApi, "/blog/sources/<string:source_code>")
 api.add_resource(sourceListApi, "/blog/sources")
 
+# Misc resources
+api.add_resource(Ci, "/ci")
+
 if __name__ == "__main__":
     if ENV != "prod":
-        app.run(debug=True)
+        app.run(debug=True, host="0.0.0.0")
 
     else:
         context = (resource_path + "Cloudflare_Origin_CA.crt", resource_path + "Cloudflare_Origin_CA.key")
