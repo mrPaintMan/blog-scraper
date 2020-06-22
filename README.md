@@ -1,5 +1,5 @@
 # blog-scraper
-Python scraping repository
+Python scraping repo
 
 This repo consist of 3 docker applications written in Python 3.8 with PyCharm IDE. 
 The folders `common-scraper`, `selenium-scraper` and `server` represent the applications and are to be treated as completely separated.
