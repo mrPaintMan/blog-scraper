@@ -7,21 +7,21 @@ SELECT_ONE_SQL = """
                  """
 SELECT_ALL_PAG_SQL = """
                         SELECT * FROM (
-                            SELECT *, ROW_NUMBER() OVER(ORDER BY post_id)
+                            SELECT *, ROW_NUMBER() OVER(ORDER BY post_id DESC)
                             FROM posts
                         ) as x
                         WHERE row_number > {} * 10
                         LIMIT 10
                     """
 SELECT_SOURCE_PAG_SQL = """
-                        SELECT * FROM (
-                            SELECT *, ROW_NUMBER() OVER(ORDER BY post_id)
-                            FROM posts
-                            WHERE source_code = '{}'
-                        ) as x
-                        WHERE row_number > {} * 10
-                        LIMIT 10
-                    """
+                            SELECT * FROM (
+                                SELECT *, ROW_NUMBER() OVER(ORDER BY post_id DESC)
+                                FROM posts
+                                WHERE source_code = '{}'
+                            ) as x
+                            WHERE row_number > {} * 10
+                            LIMIT 10
+                        """
 
 
 def get_by_id(db, post_id):
