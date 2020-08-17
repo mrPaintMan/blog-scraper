@@ -4,6 +4,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from common_src.lib.model.post import Post
+from common_src.lib.model.source import Source
 
 SOURCE_CODE = "dayz"
 WEBSITE = "https://dayz.com/search?rowsPerPage=5"
@@ -24,6 +25,13 @@ MONTHS = {
     "nov": "11",
     "dec": "12"
 }
+
+
+def get_source():
+    description = 'Dayz blog'
+    profile_image = 'https://dayz.com/90ee40a3203a24fee8ffa8d42cc6ab5a-180.png'
+    alt_image = 'https://dayz.com/b53749822130d9ff884b711e0d721ed7-1920.jpg'
+    return Source(SOURCE_CODE, description, profile_image, alt_image, None)
 
 
 def conform_date(date):
@@ -85,6 +93,6 @@ def scrape():
         date = article.find("time").text.strip().replace('-', '') + "0000"
         title = article.find("h1").text.strip()
 
-        data.append(Post(None, conform_date(date), title, link, SOURCE_CODE, None))
+        data.append(Post(None, conform_date(date), title, link, None, None, SOURCE_CODE, None))
 
     return data

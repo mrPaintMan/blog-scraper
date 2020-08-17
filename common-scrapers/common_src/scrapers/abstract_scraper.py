@@ -27,6 +27,7 @@ def make_soup(url):
 def make_local_soup():
     if os.stat(STATIC_FILE).st_size > 0:
         the_page = open(STATIC_FILE, "r")
+
     else:
         raise ValueError("static_page.html is empty! Fill it with html and try again.")
     the_soup = BeautifulSoup(the_page, "html.parser")

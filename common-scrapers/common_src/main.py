@@ -22,16 +22,28 @@ elif len(sys.argv) >= 3:
 else:
     raise Exception("No environment variables found.")
 
-
+print("Using {} as db host.".format(postgres_host))
 db = db.Db(postgres_host)
 
-posts = scraper.scrape()
+scraper_source = scraper.get_source()
+db_source = scraper_source.get_by_source_code(db)
 
+print("Using {} scraper.".format(scraper_source.source_code))
+if db_source is None or len(db_source) == 0:
+    scraper_source.insert(db)
+
+posts = scraper.scrape()
+newPosts = 0
+
+print("Scraped {} entries.".format(len(posts)))
 for post in posts:
     post.match(db)
+
+    if post.post_id == 0 or post.post_id is None:
+        newPosts += 1
+
     post.save(db)
     db.commit()
 
+print("{} new additions".format(newPosts))
 db.close()
-
-print("Scraped {} entries".format(len(posts)))
