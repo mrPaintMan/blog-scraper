@@ -1,12 +1,12 @@
 from datetime import datetime
 
 SELECT_ONE_SQL = """
-                    SELECT source_code, description, created
+                    SELECT source_code, description, profile_image, alt_image, created
                     FROM source_codes 
                     WHERE source_code = '{}'
                  """
 SELECT_ALL_SQL = """
-                    SELECT source_code, description, created
+                    SELECT source_code, description, profile_image, alt_image, created
                     FROM source_codes
                  """
 
@@ -34,10 +34,11 @@ def get_all(db):
 
 
 def conform_to_source(data):
-
-    time = datetime.timestamp(data[2])
+    time = datetime.timestamp(data[4])
     return {
         "source_code": data[0],
         "description": data[1],
+        "profile_image": data[2],
+        "alt_image": data[3],
         "created": time
     }

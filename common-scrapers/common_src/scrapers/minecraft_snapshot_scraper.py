@@ -1,9 +1,12 @@
 from common_src.lib.model.post import Post
+from common_src.lib.model.source import Source
 from common_src.scrapers.abstract_scraper import make_soup
 import re
 
 SOURCE_CODE = "minecraft_snapshot"
 WEBSITE = "https://feedback.minecraft.net/hc/en-us/sections/360002267532-Snapshot-Information-and-Changelogs"
+PROFILE_IMAGE = 'https://theme.zdassets.com/theme_assets/2155033/e31e57a9e728439e7b4e595ac626e51fdd648f40.png'
+ALT_IMAGE = 'https://theme.zdassets.com/theme_assets/2155033/972abdec3b7c5285812aa684bc5b81ca077805ee.png'
 BASE_SITE = "https://feedback.minecraft.net"
 FILENAME = "../resources/data/minecraft_snap.txt"
 MONTHS = {
@@ -20,6 +23,11 @@ MONTHS = {
     "november": "11",
     "december": "12"
 }
+
+
+def get_source():
+    description = 'Minecraft snapchot blog'
+    return Source(SOURCE_CODE, description, PROFILE_IMAGE, ALT_IMAGE, None)
 
 
 def get_articles(articles, soup):
@@ -77,6 +85,6 @@ def scrape():
             date += 1
 
         dates.append(date)
-        data.append(Post(None, date, title, link, SOURCE_CODE, None))
+        data.append(Post(None, date, title, link, PROFILE_IMAGE, None, SOURCE_CODE, None))
 
     return data

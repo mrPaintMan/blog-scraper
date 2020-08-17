@@ -51,7 +51,7 @@ sourceApi = Source.setup(postgres_host, auth)
 sourceListApi = SourceList.setup(postgres_host, auth)
 
 # Blog resources
-api.add_resource(postApi, "/blog/posts/<int:post_id>")
+api.add_resource(postApi, "/blog/posts/<int:post_id>", methods=["GET"])
 api.add_resource(postListApi, "/blog/posts")
 api.add_resource(sourceApi, "/blog/sources/<string:source_code>")
 api.add_resource(sourceListApi, "/blog/sources")
