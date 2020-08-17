@@ -1,7 +1,7 @@
 from datetime import datetime
 
 SELECT_ONE_SQL = """
-                    SELECT post_id, ext_id, title, link, source_code, created 
+                    SELECT post_id, ext_id, title, link, image, alt_image, source_code, created 
                     FROM posts 
                     WHERE post_id = {}
                  """
@@ -58,13 +58,14 @@ def get_pag_by_source(db, pagination, sourcecode):
 
 
 def conform_to_post(data):
-
-    time = datetime.timestamp(data[5])
+    time = datetime.timestamp(data[7])
     return {
         "post_id": data[0],
         "ext_id": data[1],
         "title": data[2],
         "link": data[3],
-        "source_code": data[4],
+        "image": data[4],
+        "alt_image": data[5],
+        "source_code": data[6],
         "created": time
     }
