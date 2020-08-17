@@ -25,12 +25,9 @@ else:
 print("Using {} as db host.".format(postgres_host))
 db = db.Db(postgres_host)
 
-scraper_source = scraper.get_source()
-db_source = scraper_source.get_by_source_code(db)
-
-print("Using {} scraper.".format(scraper_source.source_code))
-if db_source is None or len(db_source) == 0:
-    scraper_source.insert(db)
+source = scraper.get_source()
+print("Using {} scraper.".format(source.source_code))
+source.save(db)
 
 posts = scraper.scrape()
 newPosts = 0

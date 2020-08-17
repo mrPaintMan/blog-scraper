@@ -5,6 +5,8 @@ import re
 
 SOURCE_CODE = "minecraft_snapshot"
 WEBSITE = "https://feedback.minecraft.net/hc/en-us/sections/360002267532-Snapshot-Information-and-Changelogs"
+PROFILE_IMAGE = 'https://theme.zdassets.com/theme_assets/2155033/e31e57a9e728439e7b4e595ac626e51fdd648f40.png'
+ALT_IMAGE = 'https://theme.zdassets.com/theme_assets/2155033/972abdec3b7c5285812aa684bc5b81ca077805ee.png'
 BASE_SITE = "https://feedback.minecraft.net"
 FILENAME = "../resources/data/minecraft_snap.txt"
 MONTHS = {
@@ -25,9 +27,7 @@ MONTHS = {
 
 def get_source():
     description = 'Minecraft snapchot blog'
-    profile_image = 'https://theme.zdassets.com/theme_assets/2155033/e31e57a9e728439e7b4e595ac626e51fdd648f40.png'
-    alt_image = 'https://theme.zdassets.com/theme_assets/2155033/972abdec3b7c5285812aa684bc5b81ca077805ee.png'
-    return Source(SOURCE_CODE, description, profile_image, alt_image, None)
+    return Source(SOURCE_CODE, description, PROFILE_IMAGE, ALT_IMAGE, None)
 
 
 def get_articles(articles, soup):
@@ -85,6 +85,6 @@ def scrape():
             date += 1
 
         dates.append(date)
-        data.append(Post(None, date, title, link, None, None, SOURCE_CODE, None))
+        data.append(Post(None, date, title, link, PROFILE_IMAGE, None, SOURCE_CODE, None))
 
     return data
