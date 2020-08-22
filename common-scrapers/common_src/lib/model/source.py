@@ -1,19 +1,19 @@
 
 
 class Source:
-    INSERT_SQL = "INSERT INTO source_codes VALUES ('{}', '{}', '{}', '{}', DEFAULT) RETURNING source_code"
+    INSERT_SQL = "INSERT INTO source_codes VALUES (%s, %s, %s, %s, DEFAULT) RETURNING source_code"
     UPDATE_SQL = """
                     UPDATE source_codes 
-                    SET description = '{}', profile_image = '{}', alt_image = '{}', created = '{}' 
-                    WHERE source_code = '{}'
+                    SET description = %s, profile_image = %s, alt_image = %s, created = %s 
+                    WHERE source_code = %s
                     RETURNING source_code
                  """
     SELECT_SQL = """
                     SELECT source_code, description, profile_image, alt_image, created 
                     FROM source_codes 
-                    WHERE source_code = '{}'
+                    WHERE source_code = %s
                  """
-    DELETE_SQL = "DELETE FROM source_codes WHERE source_code = '{}' RETURNING source_code"
+    DELETE_SQL = "DELETE FROM source_codes WHERE source_code = %s RETURNING source_code"
 
     def __init__(self, source_code, description, profile_image, alt_image, created):
         self.source_code = source_code
@@ -33,29 +33,21 @@ class Source:
             return self.update(db)
 
     def insert(self, db):
-        sql = self.INSERT_SQL.format(self.source_code, self.description, self.profile_image, self.alt_image)
-        return db.execute(sql)
+        return db.execute(self.INSERT_SQL, (self.source_code, self.description, self.profile_image, self.alt_image))
 
     def update(self, db):
-        sql = self.UPDATE_SQL.format(
-            self.description,
-            self.profile_image,
-            self.alt_image,
-            self.created,
-            self.source_code,)
-        return db.execute(sql)
+        return db.execute(
+            self.UPDATE_SQL,
+            (self.description, self.profile_image, self.alt_image, self.created, self.source_code))
 
     def delete(self, db):
-        sql = self.DELETE_SQL.format(self.source_code)
-        return db.execute(sql)
+        return db.execute(self.DELETE_SQL, self.source_code)
 
     def get_by_source_code(self, db):
-        sql = self.SELECT_SQL.format(self.source_code)
-        return db.execute(sql)
+        return db.execute(self.SELECT_SQL, self.source_code)
 
     def match(self, db):
-        sql = self.SELECT_SQL.format(self.source_code)
-        data = db.execute(sql)
+        data = db.execute(self.SELECT_SQL, self.source_code)
         if data is not None and len(data) == 1:
             self.created = data[0][4]
 

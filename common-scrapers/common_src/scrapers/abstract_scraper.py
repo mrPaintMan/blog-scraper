@@ -30,6 +30,7 @@ def make_local_soup():
 
     else:
         raise ValueError("static_page.html is empty! Fill it with html and try again.")
+
     the_soup = BeautifulSoup(the_page, "html.parser")
 
     return the_soup
