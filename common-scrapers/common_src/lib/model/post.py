@@ -1,25 +1,25 @@
 
 
 class Post:
-    INSERT_SQL = "INSERT INTO posts VALUES (DEFAULT, '{}', '{}', '{}', '{}', '{}', '{}', DEFAULT) RETURNING post_id"
+    INSERT_SQL = "INSERT INTO posts VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, DEFAULT) RETURNING post_id"
     UPDATE_SQL = """
                     UPDATE posts 
-                    SET ext_id = '{}', 
-                        title = '{}', 
-                        link = '{}', 
-                        image = '{}', 
-                        alt_image = '{}', 
-                        source_code = '{}', 
-                        created = '{}' 
-                    WHERE post_id = {}
+                    SET ext_id = %s, 
+                        title = %s, 
+                        link = %s, 
+                        image = %s, 
+                        alt_image = %s, 
+                        source_code = %s, 
+                        created = %s 
+                    WHERE post_id = %s
                     RETURNING post_id
                  """
     SELECT_SQL = """
                     SELECT post_id, ext_id, title, link, image, alt_image, source_code, created 
                     FROM posts 
-                    WHERE ext_id = '{}' AND source_code = '{}'
+                    WHERE ext_id = %s AND source_code = %s
                  """
-    DELETE_SQL = "DELETE FROM posts WHERE post_id = {} RETURNING post_id"
+    DELETE_SQL = "DELETE FROM posts WHERE post_id = %s RETURNING post_id"
 
     def __init__(self, post_id, ext_id, title, link, image, alt_image, source_code, created):
         self.post_id = post_id
@@ -39,32 +39,33 @@ class Post:
             return self.update(db)
 
     def insert(self, db):
-        sql = self.INSERT_SQL.format(self.ext_id, self.title, self.link, self.image, self.alt_image, self.source_code)
-        return db.execute(sql)
+        return db.execute(
+            self.INSERT_SQL,
+            (self.ext_id, self.title, self.link, self.image, self.alt_image, self.source_code))
 
     def update(self, db):
-        sql = self.UPDATE_SQL.format(
-            self.ext_id,
-            self.title,
-            self.link,
-            self.image,
-            self.alt_image,
-            self.source_code,
-            self.created,
-            self.post_id,)
-        return db.execute(sql)
+        return db.execute(
+            self.UPDATE_SQL,
+            (
+                self.ext_id,
+                self.title,
+                self.link,
+                self.image,
+                self.alt_image,
+                self.source_code,
+                self.created,
+                self.post_id
+            )
+        )
 
     def delete(self, db):
-        sql = self.DELETE_SQL.format(self.post_id)
-        return db.execute(sql)
+        return db.execute(self.DELETE_SQL, self.post_id)
 
     def get_by_ext_id_and_source(self, db):
-        sql = self.SELECT_SQL.format(self.ext_id, self.source_code)
-        return db.execute(sql)
+        return db.execute(self.SELECT_SQL, (self.ext_id, self.source_code))
 
     def match(self, db):
-        sql = self.SELECT_SQL.format(self.ext_id, self.source_code)
-        data = db.execute(sql)
+        data = db.execute(self.SELECT_SQL, (self.ext_id, self.source_code))
         if data is not None and len(data) == 1:
             self.post_id = data[0][0]
             self.created = data[0][7]

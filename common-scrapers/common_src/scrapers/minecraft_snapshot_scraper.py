@@ -85,6 +85,6 @@ def scrape():
             date += 1
 
         dates.append(date)
-        data.append(Post(None, date, title, link, PROFILE_IMAGE, None, SOURCE_CODE, None))
+        data.append(Post(None, date, title, link, ALT_IMAGE, PROFILE_IMAGE, SOURCE_CODE, None))
 
     return data
