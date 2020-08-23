@@ -10,6 +10,7 @@ class Db:
             host=host,
             port=5432
         )
+        self.conn.autocommit = True
 
         self.cur = self.conn.cursor()
 
