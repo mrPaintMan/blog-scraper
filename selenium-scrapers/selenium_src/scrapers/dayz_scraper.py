@@ -1,14 +1,16 @@
-from bs4 import BeautifulSoup
-from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
-from common_src.lib.model.post import Post
-from common_src.lib.model.source import Source
+from selenium_src.lib.model.post import Post
+from selenium_src.lib.model.source import Source
+
+from selenium_src.scrapers.abstract_scraper import get_driver
 
 SOURCE_CODE = "dayz"
 WEBSITE = "https://dayz.com/search?rowsPerPage=5"
 BASESITE = "https://dayz.com"
+PROFILE_IMAGE = "https://dayz.com/90ee40a3203a24fee8ffa8d42cc6ab5a-180.png"
+AlT_IMAGE = "https://dayz.com/b53749822130d9ff884b711e0d721ed7-1920.jpg"
 FILENAME = "../resources/data/dayz.txt"
 XPATH_TO_FIRST_POST = "//div[1][@class='content']//a[@class='link']"
 MONTHS = {
@@ -28,10 +30,8 @@ MONTHS = {
 
 
 def get_source():
-    description = 'Dayz blog'
-    profile_image = 'https://dayz.com/90ee40a3203a24fee8ffa8d42cc6ab5a-180.png'
-    alt_image = 'https://dayz.com/b53749822130d9ff884b711e0d721ed7-1920.jpg'
-    return Source(SOURCE_CODE, description, profile_image, alt_image, None)
+    description = "Dayz blog"
+    return Source(SOURCE_CODE, description, PROFILE_IMAGE, AlT_IMAGE, None)
 
 
 def conform_date(date):
@@ -46,17 +46,31 @@ def conform_date(date):
     return new_date
 
 
-def get_articles(articles, soup, driver):
+def scrape():
+    driver = get_driver(WEBSITE)
+    data = []
 
+    # Iterate through the paginated list of articles
+    # And get every article link etc
     while True:
         pagination = driver.find_element_by_class_name("paginate__item--arrow-right")
         old_name = driver.find_element_by_xpath(XPATH_TO_FIRST_POST).text
 
-        for post in soup.find_all("div", {"class": "content"}):
-            articles.append(post)
+        for article in driver.find_elements_by_class_name("content"):
+            link = article.find_element(By.TAG_NAME, "h1").find_element_by_xpath("..").get_attribute("href")
+            image = BASESITE + article\
+                .find_element_by_xpath("../..")\
+                .find_element_by_class_name("thumb")\
+                .get_attribute("data-src")
+            date = article.find_element(By.TAG_NAME, "time").text.strip().replace('-', '') + "0000"
+            title = article.find_element(By.TAG_NAME, "h1").text.strip()
+
+            if image == "https://dayz.com/img/placeholder-300.jpg":
+                image = PROFILE_IMAGE
+
+            data.append(Post(None, conform_date(date), title, link, image, AlT_IMAGE, SOURCE_CODE, None))
 
         if "paginate__item--arrow-disabled" not in pagination.get_attribute("class"):
-
             pagination.find_element_by_class_name("butn").click()
             WebDriverWait(driver, 5).until_not(
                 ec.text_to_be_present_in_element(
@@ -65,34 +79,7 @@ def get_articles(articles, soup, driver):
                 )
             )
 
-            soup = BeautifulSoup(driver.page_source, "html.parser")
-
         else:
             break
-
-    return articles
-
-
-def scrape():
-    # Setup selenium
-    options = webdriver.ChromeOptions()
-    options.add_argument('--ignore-certificate-errors')
-    options.add_argument('--incognito')
-    options.add_argument('--headless')
-    driver = webdriver.Chrome("/usr/local/bin/chromedriver", chrome_options=options)
-    driver.get(WEBSITE)
-
-    soup = BeautifulSoup(driver.page_source, "html.parser")
-    articles = []
-    data = []
-
-    # Get each individual entry
-    articles = get_articles(articles, soup, driver)
-    for article in articles:
-        link = BASESITE + article.find(lambda tag: tag.name == 'a' and tag.get('class') == ['link']).get("href")
-        date = article.find("time").text.strip().replace('-', '') + "0000"
-        title = article.find("h1").text.strip()
-
-        data.append(Post(None, conform_date(date), title, link, None, None, SOURCE_CODE, None))
 
     return data

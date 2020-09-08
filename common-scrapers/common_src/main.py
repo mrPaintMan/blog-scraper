@@ -30,6 +30,7 @@ print("Using {} scraper.".format(source.source_code))
 source.save(db)
 
 posts = scraper.scrape()
+posts.reverse()  # To make the oldest post iterated first
 newPosts = 0
 
 print("Scraped {} entries.".format(len(posts)))
