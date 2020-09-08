@@ -2,4 +2,4 @@ beautifulsoup4 >=4.9.1
 selenium >=3.141.0
 soupsieve >=2.0.1
 urllib3 >=1.25.9
-pg8000 >=1.15.3
+pg8000 >=1.16.5
