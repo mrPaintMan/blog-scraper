@@ -7,7 +7,7 @@ SELECT_ONE_SQL = """
                  """
 SELECT_ALL_PAG_SQL = """
                         SELECT * FROM (
-                            SELECT *, ROW_NUMBER() OVER(ORDER BY post_id DESC)
+                            SELECT *, ROW_NUMBER() OVER(ORDER BY ext_id DESC)
                             FROM posts
                         ) as x
                         WHERE row_number > {} * 10
@@ -15,7 +15,7 @@ SELECT_ALL_PAG_SQL = """
                     """
 SELECT_SOURCE_PAG_SQL = """
                             SELECT * FROM (
-                                SELECT *, ROW_NUMBER() OVER(ORDER BY post_id DESC)
+                                SELECT *, ROW_NUMBER() OVER(ORDER BY ext_id DESC)
                                 FROM posts
                                 WHERE source_code = '{}'
                             ) as x
