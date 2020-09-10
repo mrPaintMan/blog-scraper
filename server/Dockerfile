@@ -7,4 +7,4 @@ COPY /server_src /server/server_src
 
 EXPOSE 5000
 
-CMD python3 -m server_src.main
+CMD gunicorn -b 0.0.0.0:5000 server_src.main:app
