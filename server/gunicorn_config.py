@@ -14,7 +14,7 @@ else:
     resource_path = ""
 
 bind = "0.0.0.0:5000"
-workers = 1
+workers = 2
 
 if ENV != "dev":
     key_file = "{}Cloudflare_Origin_CA.key".format(resource_path)
