@@ -17,9 +17,9 @@ bind = "0.0.0.0:5000"
 workers = 2
 
 if ENV != "dev":
-    key_file = "{}Cloudflare_Origin_CA.key".format(resource_path)
-    cert_file = "{}Cloudflare_Origin_CA.crt".format(resource_path)
+    keyfile = "{}Cloudflare_Origin_CA.key".format(resource_path)
+    certfile = "{}Cloudflare_Origin_CA.crt".format(resource_path)
 
 else:
-    key_file = ""
-    cert_file = ""
+    keyfile = ""
+    certfile = ""
