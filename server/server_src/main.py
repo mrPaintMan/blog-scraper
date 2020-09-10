@@ -60,9 +60,4 @@ api.add_resource(sourceListApi, "/blog/sources")
 api.add_resource(Ci, "/ci")
 
 if __name__ == "__main__":
-    if ENV != "prod":
-        app.run(debug=True, host="0.0.0.0")
-
-    else:
-        context = (resource_path + "Cloudflare_Origin_CA.crt", resource_path + "Cloudflare_Origin_CA.key")
-        app.run(debug=False, host="0.0.0.0", ssl_context=context)
+    app.run(debug=(ENV != "prod"), host="0.0.0.0")
