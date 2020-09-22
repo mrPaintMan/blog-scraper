@@ -17,12 +17,12 @@ class Db:
     def execute(self, sql, values=None):
         data = None
 
-        if values and type(values) != tuple:
+        if values is not None and type(values) != tuple:
             # To ensure values always is a tuple
             values = (values,)
 
         try:
-            if values:
+            if values is not None:
                 self.cur.execute(sql, values)
             else:
                 self.cur.execute(sql)
