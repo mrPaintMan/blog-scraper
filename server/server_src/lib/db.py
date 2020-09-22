@@ -14,15 +14,19 @@ class Db:
 
         self.cur = self.conn.cursor()
 
-    def execute(self, sql, values):
+    def execute(self, sql, values=None):
         data = None
 
-        if type(values) != tuple:
+        if values and type(values) != tuple:
             # To ensure values always is a tuple
             values = (values,)
 
         try:
-            self.cur.execute(sql, values)
+            if values:
+                self.cur.execute(sql, values)
+            else:
+                self.cur.execute(sql)
+
             data = self.cur.fetchall()
 
         except pg8000.Error as e:
