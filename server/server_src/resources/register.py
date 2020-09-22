@@ -17,7 +17,10 @@ class Register(Resource):
         existing_notifications = []
         obj = request.json
 
-        if len(obj["source_codes"]) == 0:
+        if obj["source_codes"] is None:
+            return {"status": "400 - Bad request"}, 400
+
+        elif len(obj["source_codes"]) == 0:
             notification = Notification(None, obj["device_token"], None, None)
             existing_notifications = notification.get_by_device_token(self.db)
 
