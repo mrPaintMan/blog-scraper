@@ -18,6 +18,14 @@ CREATE TABLE posts(
    UNIQUE (ext_id, source_code)
 );
 
+CREATE TABLE notifications(
+   n_id serial PRIMARY KEY,
+   device_token VARCHAR (256) NOT NULL,
+   source_code VARCHAR (64) REFERENCES source_codes(source_code) NOT NULL,
+   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+   UNIQUE (device_token, source_code)
+)
+
 CREATE USER app WITH PASSWORD 'vh38pt94dx';
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO app;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO app;

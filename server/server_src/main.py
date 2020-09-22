@@ -7,6 +7,7 @@ from flask_httpauth import HTTPTokenAuth
 from server_src.resources.ci import Ci
 from server_src.resources.post import Post, PostList
 from server_src.resources.source import Source, SourceList
+from server_src.resources.register import Register
 
 app = Flask(__name__)
 api = Api(app)
@@ -50,11 +51,14 @@ postListApi = PostList.setup(postgres_host, auth)
 sourceApi = Source.setup(postgres_host, auth)
 sourceListApi = SourceList.setup(postgres_host, auth)
 
+registrationApi = Register.setup(postgres_host, auth)
+
 # Blog resources
 api.add_resource(postApi, "/blog/posts/<int:post_id>", methods=["GET"])
 api.add_resource(postListApi, "/blog/posts")
 api.add_resource(sourceApi, "/blog/sources/<string:source_code>")
 api.add_resource(sourceListApi, "/blog/sources")
+api.add_resource(registrationApi, "/blog/register")
 
 # Misc resources
 api.add_resource(Ci, "/ci")

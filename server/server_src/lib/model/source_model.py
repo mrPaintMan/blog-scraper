@@ -3,7 +3,7 @@ from datetime import datetime
 SELECT_ONE_SQL = """
                     SELECT source_code, description, profile_image, alt_image, created
                     FROM source_codes 
-                    WHERE source_code = '{}'
+                    WHERE source_code = %s
                  """
 SELECT_ALL_SQL = """
                     SELECT source_code, description, profile_image, alt_image, created
@@ -12,8 +12,7 @@ SELECT_ALL_SQL = """
 
 
 def get_by_code(db, source_code):
-    sql = SELECT_ONE_SQL.format(source_code)
-    data = db.execute(sql)
+    data = db.execute(SELECT_ONE_SQL, source_code)
     result = []
 
     for source in data:
@@ -23,8 +22,7 @@ def get_by_code(db, source_code):
 
 
 def get_all(db):
-    sql = SELECT_ALL_SQL
-    data = db.execute(sql)
+    data = db.execute(SELECT_ALL_SQL)
     result = []
 
     for source in data:
