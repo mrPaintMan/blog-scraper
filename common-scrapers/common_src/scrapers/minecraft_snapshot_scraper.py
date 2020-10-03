@@ -1,6 +1,6 @@
 from common_src.lib.model.post import Post
 from common_src.lib.model.source import Source
-from common_src.scrapers.abstract_scraper import make_soup
+from common_src.scrapers.abstract_scraper import make_soup, MONTHS
 import re
 
 SOURCE_CODE = "minecraft_snapshot"
@@ -9,20 +9,6 @@ PROFILE_IMAGE = 'https://theme.zdassets.com/theme_assets/2155033/e31e57a9e728439
 ALT_IMAGE = 'https://theme.zdassets.com/theme_assets/2155033/972abdec3b7c5285812aa684bc5b81ca077805ee.png'
 BASE_SITE = "https://feedback.minecraft.net"
 FILENAME = "../resources/data/minecraft_snap.txt"
-MONTHS = {
-    "january": "01",
-    "february": "02",
-    "march": "03",
-    "april": "04",
-    "may": "05",
-    "june": "06",
-    "july": "07",
-    "august": "08",
-    "september": "09",
-    "october": "10",
-    "november": "11",
-    "december": "12"
-}
 
 
 def get_source():

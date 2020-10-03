@@ -6,7 +6,8 @@ from common_src.scrapers import *
 
 SCRAPERS = {
     "gen_zero": gen_zero_scraper,
-    "minecraft_snapshot": minecraft_snapshot_scraper
+    "minecraft_snapshot": minecraft_snapshot_scraper,
+    "no_mans_sky": no_mans_sky_scraper
 }
 
 if "ENV" in os.environ:

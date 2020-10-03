@@ -7,6 +7,21 @@ from common_src.lib.model.post import Post
 
 STATIC_FILE = "not-implemented"
 
+MONTHS = {
+    "january": "01",
+    "february": "02",
+    "march": "03",
+    "april": "04",
+    "may": "05",
+    "june": "06",
+    "july": "07",
+    "august": "08",
+    "september": "09",
+    "october": "10",
+    "november": "11",
+    "december": "12"
+}
+
 
 def make_soup(url):
     headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) '
