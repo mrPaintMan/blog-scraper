@@ -1,5 +1,4 @@
 from flask_restful import Resource
-from flask import request
 from server_src.lib.model import source_model
 from server_src.lib.db import Db
 

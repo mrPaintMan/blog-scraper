@@ -63,7 +63,7 @@ def scrape():
 
             data.append(Post(None, date, title, link, image, alt_image, SOURCE_CODE, None))
 
-        print("Processed {} posts".format(len(data)))
+        print(f"Processed {len(data)} posts")
         next_site_div = soup.find("a", {"class": "next"})
 
         if next_site_div is not None:

@@ -52,4 +52,4 @@ class Source:
             self.created = data[0][4]
 
         elif data is not None and len(data) > 1:
-            raise Exception("Multiple rows for source_code: {}".format(self.source_code))
+            raise Exception(f"Multiple rows for source_code: {self.source_code}")

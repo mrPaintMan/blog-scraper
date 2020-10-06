@@ -23,18 +23,18 @@ elif len(sys.argv) >= 3:
 else:
     raise Exception("No environment variables found.")
 
-print("Using {} as db host.".format(postgres_host))
+print(f"Using {postgres_host} as db host.")
 db = db.Db(postgres_host)
 
 source = scraper.get_source()
-print("Using {} scraper.".format(source.source_code))
+print(f"Using {source.source_code} scraper.")
 source.save(db)
 
 posts = scraper.scrape()
 posts.reverse()  # To make the oldest post iterated first
 newPosts = 0
 
-print("Scraped {} entries.".format(len(posts)))
+print(f"Scraped {len(posts)} entries.")
 for post in posts:
     post.match(db)
 
@@ -44,5 +44,5 @@ for post in posts:
     post.save(db)
     db.commit()
 
-print("{} new additions".format(newPosts))
+print(f"{newPosts} new additions")
 db.close()
