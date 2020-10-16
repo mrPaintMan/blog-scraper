@@ -35,6 +35,7 @@ def get_by_id(db, post_id):
 
 
 def get_pag(db, pagination):
+    print(pagination)
     data = db.execute(SELECT_ALL_PAG_SQL, pagination)
     result = []
 

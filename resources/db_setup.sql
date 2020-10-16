@@ -1,5 +1,6 @@
 CREATE TABLE source_codes(
    source_code VARCHAR (64) PRIMARY KEY,
+   name VARCHAR(64) NOT NULL,
    description VARCHAR (256) NOT NULL,
    profile_image VARCHAR (256) NOT NULL,
    alt_image VARCHAR (256) NOT NULL,
@@ -18,12 +19,18 @@ CREATE TABLE posts(
    UNIQUE (ext_id, source_code)
 );
 
-CREATE TABLE notifications(
-   n_id serial PRIMARY KEY,
+CREATE TABLE notification_register(
+   nr_id serial PRIMARY KEY,
    device_token VARCHAR (256) NOT NULL,
    source_code VARCHAR (64) REFERENCES source_codes(source_code) NOT NULL,
    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
    UNIQUE (device_token, source_code)
+);
+
+CREATE TABLE notifications(
+   n_id serial PRIMARY KEY,
+   post_id INTEGER REFERENCES posts(post_id) UNIQUE NOT NULL,
+   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE USER app WITH PASSWORD 'vh38pt94dx';

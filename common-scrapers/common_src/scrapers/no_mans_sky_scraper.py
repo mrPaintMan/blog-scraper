@@ -9,9 +9,10 @@ FILENAME = "../resources/data/no_mans_sky.txt"
 
 
 def get_source():
+    name = "No Man's Sky"
     description = 'Official No Mans Sky blog'
     profile_image = 'https://www.nomanssky.com/wp-content/uploads/2017/02/icon.png'
-    return Source(SOURCE_CODE, description, profile_image, ALT_IMAGE, None)
+    return Source(SOURCE_CODE, name, description, profile_image, ALT_IMAGE, None)
 
 
 def conform_date(string):

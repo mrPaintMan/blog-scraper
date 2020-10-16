@@ -9,9 +9,10 @@ FILENAME = "../resources/data/gen_zero.txt"
 
 
 def get_source():
+    name = "Generation Zero"
     description = 'Official Generation Zero blog'
     profile_image = 'https://generationzero.com/content/leftlogo.png'
-    return Source(SOURCE_CODE, description, profile_image, ALT_IMAGE, None)
+    return Source(SOURCE_CODE, name, description, profile_image, ALT_IMAGE, None)
 
 
 def get_image(link):
