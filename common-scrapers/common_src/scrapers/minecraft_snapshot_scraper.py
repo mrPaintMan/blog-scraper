@@ -12,8 +12,9 @@ FILENAME = "../resources/data/minecraft_snap.txt"
 
 
 def get_source():
+    name = "Minecraft Snapshot"
     description = 'Minecraft snapchot blog'
-    return Source(SOURCE_CODE, description, PROFILE_IMAGE, ALT_IMAGE, None)
+    return Source(SOURCE_CODE, name, description, PROFILE_IMAGE, ALT_IMAGE, None)
 
 
 def get_articles(articles, soup):

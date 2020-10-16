@@ -2,6 +2,7 @@ import os
 import sys
 
 from common_src.lib import db
+from common_src.lib.model.notification import Notification, push_notifications
 from common_src.scrapers import *
 
 SCRAPERS = {
@@ -23,26 +24,39 @@ elif len(sys.argv) >= 3:
 else:
     raise Exception("No environment variables found.")
 
-print("Using {} as db host.".format(postgres_host))
+print(f"Using {postgres_host} as db host.")
 db = db.Db(postgres_host)
 
 source = scraper.get_source()
-print("Using {} scraper.".format(source.source_code))
+print(f"Using {source.source_code} scraper.")
 source.save(db)
+db.commit()
 
 posts = scraper.scrape()
 posts.reverse()  # To make the oldest post iterated first
-newPosts = 0
+newPosts = []
 
-print("Scraped {} entries.".format(len(posts)))
+print(f"Scraped {len(posts)} entries.")
 for post in posts:
     post.match(db)
 
     if post.post_id == 0 or post.post_id is None:
-        newPosts += 1
+        post.post_id = post.save(db)
+        newPosts.append(post)
 
-    post.save(db)
+    else:
+        post.save(db)
+
     db.commit()
 
-print("{} new additions".format(newPosts))
+print(f"{len(newPosts)} new additions")
+for post in newPosts:
+    notification = Notification(None, post.post_id)
+    notification.save(db)
+
+db.commit()
+
+if len(newPosts) > 0:
+    push_notifications(ENV)
+
 db.close()

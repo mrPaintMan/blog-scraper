@@ -1,5 +1,4 @@
 from flask_restful import Resource
-from flask import request
 from server_src.lib.model import source_model
 from server_src.lib.db import Db
 
@@ -11,10 +10,6 @@ class Source(Resource):
         cls.db = Db(host)
         cls.decorators = [auth.login_required]
         return cls
-
-    @staticmethod
-    def post(source_code):
-        return {"status": "404 - Resource not found."}, 404
 
     def get(self, source_code):
         try:
@@ -33,14 +28,6 @@ class Source(Resource):
             "data": posts
         }
 
-    @staticmethod
-    def put(source_code):
-        return {"status": "404 - Resource not found."}, 404
-
-    @staticmethod
-    def delete(source_code):
-        return {"status": "404 - Resource not found."}, 404
-
 
 class SourceList(Resource):
 
@@ -50,10 +37,6 @@ class SourceList(Resource):
         cls.decorators = [auth.login_required]
         return cls
 
-    @staticmethod
-    def post(source_code):
-        return {"status": "404 - Resource not found."}, 404
-
     def get(self):
         posts = source_model.get_all(self.db)
 
@@ -61,12 +44,3 @@ class SourceList(Resource):
             "status": "200 - Ok",
             "data": posts
         }
-
-    @staticmethod
-    def put(source_code):
-        return {"status": "404 - Resource not found."}, 404
-
-    @staticmethod
-    def delete(source_code):
-        return {"status": "404 - Resource not found."}, 404
-

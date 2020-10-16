@@ -9,9 +9,10 @@ FILENAME = "../resources/data/no_mans_sky.txt"
 
 
 def get_source():
+    name = "No Man's Sky"
     description = 'Official No Mans Sky blog'
     profile_image = 'https://www.nomanssky.com/wp-content/uploads/2017/02/icon.png'
-    return Source(SOURCE_CODE, description, profile_image, ALT_IMAGE, None)
+    return Source(SOURCE_CODE, name, description, profile_image, ALT_IMAGE, None)
 
 
 def conform_date(string):
@@ -63,7 +64,7 @@ def scrape():
 
             data.append(Post(None, date, title, link, image, alt_image, SOURCE_CODE, None))
 
-        print("Processed {} posts".format(len(data)))
+        print(f"Processed {len(data)} posts")
         next_site_div = soup.find("a", {"class": "next"})
 
         if next_site_div is not None:

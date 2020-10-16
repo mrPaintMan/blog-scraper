@@ -30,8 +30,9 @@ MONTHS = {
 
 
 def get_source():
+    name = "Dayz"
     description = "Dayz blog"
-    return Source(SOURCE_CODE, description, PROFILE_IMAGE, AlT_IMAGE, None)
+    return Source(SOURCE_CODE, name, description, PROFILE_IMAGE, AlT_IMAGE, None)
 
 
 def conform_date(date):

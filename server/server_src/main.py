@@ -8,6 +8,7 @@ from server_src.resources.ci import Ci
 from server_src.resources.post import Post, PostList
 from server_src.resources.source import Source, SourceList
 from server_src.resources.register import Register
+from server_src.resources.notifications import Notifications
 
 app = Flask(__name__)
 api = Api(app)
@@ -16,7 +17,7 @@ auth = HTTPTokenAuth()
 if "ENV" in os.environ:
     ENV = os.environ["ENV"]
     postgres_host = "host.docker.internal" if "DB_HOST" not in os.environ else os.environ["DB_HOST"]
-    resource_path = "/resources/" if "TOKEN_PATH" not in os.environ else os.environ["TOKEN_PATH"]
+    resource_path = "../../resources/" if "RESOURCE_PATH" not in os.environ else os.environ["RESOURCE_PATH"]
 
 elif len(sys.argv) >= 3:
     ENV = sys.argv[1]
@@ -52,16 +53,18 @@ sourceApi = Source.setup(postgres_host, auth)
 sourceListApi = SourceList.setup(postgres_host, auth)
 
 registrationApi = Register.setup(postgres_host, auth)
+notificationsApi = Notifications.setup(postgres_host, resource_path)
 
 # Blog resources
 api.add_resource(postApi, "/blog/posts/<int:post_id>", methods=["GET"])
-api.add_resource(postListApi, "/blog/posts")
-api.add_resource(sourceApi, "/blog/sources/<string:source_code>")
-api.add_resource(sourceListApi, "/blog/sources")
-api.add_resource(registrationApi, "/blog/register")
+api.add_resource(postListApi, "/blog/posts", methods=["GET"])
+api.add_resource(sourceApi, "/blog/sources/<string:source_code>", methods=["GET"])
+api.add_resource(sourceListApi, "/blog/sources", methods=["GET"])
+api.add_resource(registrationApi, "/blog/register", methods=["POST"])
+api.add_resource(notificationsApi, "/blog/notifications", methods=["GET"])
 
 # Misc resources
-api.add_resource(Ci, "/ci")
+api.add_resource(Ci, "/ci", methods=["POST"])
 
 if __name__ == "__main__":
     if ENV != "prod":

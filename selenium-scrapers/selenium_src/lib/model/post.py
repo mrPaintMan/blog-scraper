@@ -41,7 +41,7 @@ class Post:
     def insert(self, db):
         return db.execute(
             self.INSERT_SQL,
-            (self.ext_id, self.title, self.link, self.image, self.alt_image, self.source_code))
+            (self.ext_id, self.title, self.link, self.image, self.alt_image, self.source_code))[0][0]
 
     def update(self, db):
         return db.execute(
@@ -56,10 +56,10 @@ class Post:
                 self.created,
                 self.post_id
             )
-        )
+        )[0][0]
 
     def delete(self, db):
-        return db.execute(self.DELETE_SQL, self.post_id)
+        return db.execute(self.DELETE_SQL, self.post_id)[0][0]
 
     def get_by_ext_id_and_source(self, db):
         return db.execute(self.SELECT_SQL, (self.ext_id, self.source_code))
@@ -71,4 +71,4 @@ class Post:
             self.created = data[0][7]
 
         elif data is not None and len(data) > 1:
-            raise Exception("Multiple rows for ext_id: {} and source_code {}".format(self.ext_id, self.source_code))
+            raise Exception(f"Multiple rows for ext_id: {self.ext_id} and source_code {self.source_code}")
