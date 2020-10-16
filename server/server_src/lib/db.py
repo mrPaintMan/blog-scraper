@@ -16,8 +16,7 @@ class Db:
 
     def execute(self, sql, values=None):
         data = None
-        print(type(values))
-        print(values is not None and type(values) != tuple)
+
         if values is not None and type(values) != tuple:
             # To ensure values always is a tuple
             values = (values,)
