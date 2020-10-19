@@ -12,9 +12,13 @@ class Notification:
         return db.execute(self.INSERT_SQL, self.post_id)[0][0]
 
 
-def push_notifications(env):
-    if env != "prod":
-        requests.get("http://localhost:5000/blog/notifications")
+def push_notifications(env, host):
+    try:
+        if env != "prod":
+            requests.get(f"http://{host}:5000/blog/notifications")
 
-    else:
-        requests.get("https://api.fpalmqvist.com/blog/notifications")
+        else:
+            requests.get("https://api.fpalmqvist.com/blog/notifications")
+
+    except Exception as e:
+        print("Could not get /notifications. exception:", e)

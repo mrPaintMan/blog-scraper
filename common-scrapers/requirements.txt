@@ -1,5 +1,6 @@
-beautifulsoup4 >=4.9.1
+beautifulsoup4 >=4.9.3
 selenium >=3.141.0
 soupsieve >=2.0.1
-urllib3 >=1.25.9
-pg8000 >=1.16.5
+urllib3 >=1.25.10
+pg8000 >=1.16.6
+requests >= 2.24.0

@@ -14,18 +14,18 @@ SCRAPERS = {
 if "ENV" in os.environ:
     ENV = os.environ["ENV"]
     scraper = SCRAPERS[os.environ["SCRAPER"]]
-    postgres_host = "host.docker.internal" if "DB_HOST" not in os.environ else os.environ["DB_HOST"]
+    host = "host.docker.internal" if "HOST" not in os.environ else os.environ["HOST"]
 
 elif len(sys.argv) >= 3:
     ENV = sys.argv[1]
     scraper = SCRAPERS[sys.argv[2]]
-    postgres_host = sys.argv[3]
+    host = sys.argv[3]
 
 else:
     raise Exception("No environment variables found.")
 
-print(f"Using {postgres_host} as db host.")
-db = db.Db(postgres_host)
+print(f"Using {host} as host.")
+db = db.Db(host)
 
 source = scraper.get_source()
 print(f"Using {source.source_code} scraper.")
@@ -57,6 +57,6 @@ for post in newPosts:
 db.commit()
 
 if len(newPosts) > 0:
-    push_notifications(ENV)
+    push_notifications(ENV, host)
 
 db.close()
