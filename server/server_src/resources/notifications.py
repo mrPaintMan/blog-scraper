@@ -9,10 +9,10 @@ from server_src.lib.model import notification_model, register_model, source_mode
 class Notifications(Resource):
 
     @classmethod
-    def setup(cls, host, resouce_path):
+    def setup(cls, host, resource_path):
         cls.db = Db(host)
-        cls.apns_cert = resouce_path + "apns.crt.pem"
-        cls.apns_key = resouce_path + "apns.key.pem"
+        cls.apns_cert = resource_path + "apns.crt.pem"
+        cls.apns_key = resource_path + "apns.key.pem"
         return cls
 
     def get(self):
@@ -55,7 +55,7 @@ class Notifications(Resource):
             url = base_url + registration.device_token
 
             session = requests.Session()
-            session.cert = (self.apns_cert, self.apns_key)
+            session.cert = self.apns_cert, self.apns_key
             session.mount(url, HTTP20Adapter())
             session.headers["Content-Type"] = "application/json"
             session.post(url, data=data)

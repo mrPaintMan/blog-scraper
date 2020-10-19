@@ -16,17 +16,17 @@ auth = HTTPTokenAuth()
 
 if "ENV" in os.environ:
     ENV = os.environ["ENV"]
-    postgres_host = "host.docker.internal" if "DB_HOST" not in os.environ else os.environ["DB_HOST"]
+    host = "host.docker.internal" if "HOST" not in os.environ else os.environ["HOST"]
     resource_path = "../../resources/" if "RESOURCE_PATH" not in os.environ else os.environ["RESOURCE_PATH"]
 
 elif len(sys.argv) >= 3:
     ENV = sys.argv[1]
-    postgres_host = sys.argv[2]
+    host = sys.argv[2]
     resource_path = sys.argv[3]
 
 else:
     ENV = "dev"
-    postgres_host = "localhost"
+    host = "localhost"
     resource_path = "../../resources/"
 
 
@@ -46,14 +46,14 @@ def handle_error():
     return {"status": "401 - Unauthorized."}, 401
 
 
-postApi = Post.setup(postgres_host, auth)
-postListApi = PostList.setup(postgres_host, auth)
+postApi = Post.setup(host, auth)
+postListApi = PostList.setup(host, auth)
 
-sourceApi = Source.setup(postgres_host, auth)
-sourceListApi = SourceList.setup(postgres_host, auth)
+sourceApi = Source.setup(host, auth)
+sourceListApi = SourceList.setup(host, auth)
 
-registrationApi = Register.setup(postgres_host, auth)
-notificationsApi = Notifications.setup(postgres_host, resource_path)
+registrationApi = Register.setup(host, auth)
+notificationsApi = Notifications.setup(host, resource_path)
 
 # Blog resources
 api.add_resource(postApi, "/blog/posts/<int:post_id>", methods=["GET"])
