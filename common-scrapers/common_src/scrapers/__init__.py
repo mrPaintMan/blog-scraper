@@ -1,1 +1,1 @@
-__all__ = ["abstract_scraper", "gen_zero_scraper", "minecraft_snapshot_scraper", "no_mans_sky_scraper"]
+__all__ = ["abstract_scraper", "gen_zero_scraper", "no_mans_sky_scraper"]
