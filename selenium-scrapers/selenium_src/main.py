@@ -6,7 +6,8 @@ from selenium_src.lib.model.notification import Notification, push_notifications
 from selenium_src.scrapers import *
 
 SCRAPERS = {
-    "dayz": dayz_scraper
+    "dayz": dayz_scraper,
+    "minecraft_snapshot": minecraft_snapshot_scraper
 }
 
 if "ENV" in os.environ:

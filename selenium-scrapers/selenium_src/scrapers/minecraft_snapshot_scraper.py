@@ -1,6 +1,7 @@
-from common_src.lib.model.post import Post
-from common_src.lib.model.source import Source
-from common_src.scrapers.abstract_scraper import make_soup, MONTHS
+from selenium_src.lib.model.post import Post
+from selenium_src.lib.model.source import Source
+from selenium_src.scrapers.abstract_scraper import get_driver, long_months
+
 import re
 
 SOURCE_CODE = "minecraft_snapshot"
@@ -17,32 +18,38 @@ def get_source():
     return Source(SOURCE_CODE, name, description, PROFILE_IMAGE, ALT_IMAGE, None)
 
 
-def get_articles(articles, soup):
+def get_articles(articles, driver):
+    page = 1
     while True:
-        pagination = soup.find("li", {"class": "pagination-next"})
-        posts = soup.find("ul", {"class": "article-list"})
-        for post in posts.find_all("li"):
-            articles.append(BASE_SITE + post.find("a").get("href"))
+        pagination = driver.find_elements_by_class_name("pagination-next")
+        links = driver.find_elements_by_class_name("article-list-link")
+        for link in links:
+            articles.append(link.get_attribute("href"))
 
-        if pagination is not None:
-            soup = make_soup(BASE_SITE + pagination.find("a").get("href"))
+        if pagination is not None and len(pagination) > 0:
+            page = page + 1
+            driver = get_driver(f"{WEBSITE}?page={page}")
+
         else:
             break
+
     return articles
 
 
-def get_date(soup):
+def get_date(driver):
     date = None
-    date_candidates = soup.find("div", {"class": "article-body"}).findChildren()
+    body = driver.find_element_by_class_name("article-body")
+    candidates = body.find_elements_by_xpath(".//*")
 
-    for candidate in date_candidates[:10]:
+    for candidate in candidates[:10]:
         text = candidate.text.strip()
         words = re.split(r"\s+", text)
 
         if len(words) >= 3 and re.search(r"\d{1,2}", words[0]) and re.search(r"\d{4}", words[2]):
             if len(words[0]) == 1:
                 words[0] = "0" + words[0]
-            date = words[2] + MONTHS[words[1].lower()] + words[0]
+
+            date = words[2] + long_months[words[1].lower()] + words[0]
             date = re.sub(r"\D", "", date) + "0000"
             break
 
@@ -50,28 +57,27 @@ def get_date(soup):
 
 
 def scrape():
-    soup = make_soup(WEBSITE)
+    driver = get_driver(WEBSITE)
     articles = []
     data = []
-    dates = []
 
     # Get each individual entry
-    articles = get_articles(articles, soup)
+    articles = get_articles(articles, driver)
+    print(f"Found {len(articles)} entries")
 
-    # Get entry data
     for article in articles:
-        blog_soup = make_soup(article)
+        driver = get_driver(article)
 
         link = article
-        date = get_date(blog_soup)
-        title = blog_soup.find("h1", {"class": "article-title"}).text.strip()
+        date = get_date(driver)
+        title = driver.find_element_by_class_name("article-title").text
+
         if date is None:
             continue
 
-        elif date in dates:
-            date += 1
-
-        dates.append(date)
         data.append(Post(None, date, title, link, ALT_IMAGE, PROFILE_IMAGE, SOURCE_CODE, None))
+
+        if len(data) % 10 == 0:
+            print(f"Scraped {len(data)} entries.")
 
     return data

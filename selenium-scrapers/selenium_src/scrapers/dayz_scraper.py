@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium_src.lib.model.post import Post
 from selenium_src.lib.model.source import Source
 
-from selenium_src.scrapers.abstract_scraper import get_driver
+from selenium_src.scrapers.abstract_scraper import get_driver, short_months
 
 SOURCE_CODE = "dayz"
 WEBSITE = "https://dayz.com/search?rowsPerPage=5"
@@ -13,20 +13,6 @@ PROFILE_IMAGE = "https://dayz.com/90ee40a3203a24fee8ffa8d42cc6ab5a-180.png"
 AlT_IMAGE = "https://dayz.com/b53749822130d9ff884b711e0d721ed7-1920.jpg"
 FILENAME = "../resources/data/dayz.txt"
 XPATH_TO_FIRST_POST = "//div[1][@class='content']//a[@class='link']"
-MONTHS = {
-    "jan": "01",
-    "feb": "02",
-    "mar": "03",
-    "apr": "04",
-    "may": "05",
-    "june": "06",
-    "july": "07",
-    "aug": "08",
-    "sep": "09",
-    "oct": "10",
-    "nov": "11",
-    "dec": "12"
-}
 
 
 def get_source():
@@ -40,7 +26,7 @@ def conform_date(date):
     if len(words) > 3:
         if len(words[1]) == 1:
             words[1] = "0" + words[1]
-        new_date = words[2] + MONTHS[words[0].lower()] + words[1] + words[3]
+        new_date = words[2] + short_months[words[0].lower()] + words[1] + words[3]
     else:
         new_date = "N/A"
 
