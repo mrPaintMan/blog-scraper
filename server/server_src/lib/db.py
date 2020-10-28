@@ -22,7 +22,7 @@ class Db:
             values = (values,)
 
         try:
-            if values:
+            if values is not None:
                 self.cur.execute(sql, values)
             else:
                 self.cur.execute(sql)
