@@ -1,6 +1,6 @@
 from selenium_src.lib.model.post import Post
 from selenium_src.lib.model.source import Source
-from selenium_src.scrapers.abstract_scraper import get_driver, long_months
+from selenium_src.scrapers.abstract_scraper import get_driver, long_months, get_page
 
 import re
 
@@ -20,6 +20,7 @@ def get_source():
 
 def get_articles(articles, driver):
     page = 1
+
     while True:
         pagination = driver.find_elements_by_class_name("pagination-next")
         links = driver.find_elements_by_class_name("article-list-link")
@@ -28,7 +29,7 @@ def get_articles(articles, driver):
 
         if pagination is not None and len(pagination) > 0:
             page = page + 1
-            driver = get_driver(f"{WEBSITE}?page={page}")
+            driver = get_page(driver, f"{WEBSITE}?page={page}")
 
         else:
             break
@@ -57,7 +58,8 @@ def get_date(driver):
 
 
 def scrape():
-    driver = get_driver(WEBSITE)
+    driver = get_driver()
+    driver = get_page(driver, WEBSITE)
     articles = []
     data = []
 
@@ -66,7 +68,7 @@ def scrape():
     print(f"Found {len(articles)} entries")
 
     for article in articles:
-        driver = get_driver(article)
+        driver = get_page(driver, article)
 
         link = article
         date = get_date(driver)

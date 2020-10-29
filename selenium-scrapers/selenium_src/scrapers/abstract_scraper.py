@@ -1,5 +1,7 @@
 from selenium import webdriver
 
+user_agent_iteration = 1
+
 long_months = {
     "january": "01",
     "february": "02",
@@ -31,10 +33,10 @@ short_months = {
 }
 
 
-def get_driver(website):
+def get_driver():
     user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " \
         "AppleWebKit/537.36 (KHTML, like Gecko) " \
-        "Chrome/74.0.3729.157 Safari/537.36"
+        f"Chrome/74.0.3729.{user_agent_iteration} Safari/537.36"
 
     # Setup selenium
     options = webdriver.ChromeOptions()
@@ -45,6 +47,18 @@ def get_driver(website):
     options.add_argument('--disable-dev-shm-usage')
     options.add_argument('--no-sandbox')
     driver = webdriver.Chrome(chrome_options=options)
+
+    return driver
+
+
+def get_page(driver, website):
+    global user_agent_iteration
+    user_agent_iteration += 1
+    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " \
+                 "AppleWebKit/537.36 (KHTML, like Gecko) " \
+                 f"Chrome/74.0.3729.{user_agent_iteration} Safari/537.36"
+
+    driver.execute_cdp_cmd('Network.setUserAgentOverride', {"userAgent": user_agent})
     driver.get(website)
 
     return driver
