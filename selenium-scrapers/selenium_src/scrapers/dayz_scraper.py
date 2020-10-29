@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium_src.lib.model.post import Post
 from selenium_src.lib.model.source import Source
 
-from selenium_src.scrapers.abstract_scraper import get_driver, short_months
+from selenium_src.scrapers.abstract_scraper import get_driver, short_months, get_page
 
 SOURCE_CODE = "dayz"
 WEBSITE = "https://dayz.com/search?rowsPerPage=5"
@@ -34,7 +34,8 @@ def conform_date(date):
 
 
 def scrape():
-    driver = get_driver(WEBSITE)
+    driver = get_driver()
+    driver = get_page(driver, WEBSITE)
     data = []
 
     # Iterate through the paginated list of articles
