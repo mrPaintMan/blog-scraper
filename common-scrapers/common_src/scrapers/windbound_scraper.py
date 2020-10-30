@@ -12,7 +12,6 @@ def get_source():
     name = "Windbound"
     description = 'The Windbound development blog'
     profile_image = 'https://pbs.twimg.com/profile_images/1244576569881960453/LtsDRVRs_reasonably_small.png'
-    print(profile_image)
     return Source(SOURCE_CODE, name, description, profile_image, ALT_IMAGE, None)
 
 
@@ -32,7 +31,6 @@ def scrape():
         alt_image = ALT_IMAGE
         image = post.findAll("img")[0].get("src")
 
-        print(date, title, link, image, alt_image)
         data.append(Post(None, date, title, link, image, alt_image, SOURCE_CODE, None))
 
     return data
