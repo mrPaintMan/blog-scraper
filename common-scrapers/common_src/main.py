@@ -7,7 +7,8 @@ from common_src.scrapers import *
 
 SCRAPERS = {
     "gen_zero": gen_zero_scraper,
-    "no_mans_sky": no_mans_sky_scraper
+    "no_mans_sky": no_mans_sky_scraper,
+    "windbound": windbound_scraper
 }
 
 if "ENV" in os.environ:
