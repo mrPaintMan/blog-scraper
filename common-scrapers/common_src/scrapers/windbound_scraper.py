@@ -11,7 +11,7 @@ FILENAME = "../resources/data/windbound.txt"
 def get_source():
     name = "Windbound"
     description = 'The Windbound development blog'
-    profile_image = 'https://2ffad809f2275eb5.azureedge.net/media/Windbound/Logos/logo-windbound-white.svg'
+    profile_image = 'https://pbs.twimg.com/profile_images/1244576569881960453/LtsDRVRs_reasonably_small.png'
     return Source(SOURCE_CODE, name, description, profile_image, ALT_IMAGE, None)
 
 
@@ -22,11 +22,12 @@ def get_date(date_string):
 
 def scrape():
     soup = make_soup(WEBSITE)
+    base_site = "https://windboundgame.com"
     data = []
     for post in soup.find_all("div", {"class": "card--news"}):
         date = get_date(post.find("p").text.strip())
         title = post.find("h3").text.strip()
-        link = post.find("a").get("href")
+        link = base_site + post.find("a").get("href")
         alt_image = ALT_IMAGE
         image = post.findAll("img")[0].get("src")
 
