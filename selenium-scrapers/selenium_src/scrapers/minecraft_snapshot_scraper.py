@@ -78,7 +78,7 @@ def scrape():
         if date is None:
             continue
 
-        data.append(Post(None, date, title, link, ALT_IMAGE, PROFILE_IMAGE, SOURCE_CODE, None))
+        data.append(Post(None, date, title, link, image, ALT_IMAGE, SOURCE_CODE, None))
 
         if len(data) % 10 == 0:
             print(f"Scraped {len(data)} entries.")
