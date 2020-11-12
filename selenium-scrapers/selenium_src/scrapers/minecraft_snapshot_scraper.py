@@ -1,6 +1,6 @@
 from selenium_src.lib.model.post import Post
 from selenium_src.lib.model.source import Source
-from selenium_src.scrapers.abstract_scraper import get_driver, long_months, get_page
+from selenium_src.scrapers.abstract_scraper import get_driver, get_page
 
 import re
 
@@ -25,7 +25,21 @@ def get_articles(articles, driver):
         pagination = driver.find_elements_by_class_name("pagination-next")
         links = driver.find_elements_by_class_name("article-list-link")
         for link in links:
-            articles.append(link.get_attribute("href"))
+            href = re.split(r"\d{12}", link.get_attribute("href"))[1].lower()
+            modified_href = href.replace("-minecraft-", "").replace("java-", "").replace("edition-", "")
+
+            if re.search("-pre-", modified_href):
+                modified_href = modified_href.replace("snapshot-", "")
+
+                if re.search(r"\d$", modified_href):
+                    modified_href = modified_href[0:-1] + "1"
+
+            # Replace the last word-char in the link with 'a'
+            if re.search(r"\d[a-zA-Z]$", modified_href):
+                modified_href = modified_href[0:-1] + "a"
+
+            # These articles contain better images and date information
+            articles.append("https://www.minecraft.net/en-us/article/minecraft-" + modified_href)
 
         if pagination is not None and len(pagination) > 0:
             page = page + 1
@@ -35,26 +49,6 @@ def get_articles(articles, driver):
             break
 
     return articles
-
-
-def get_date(driver):
-    date = None
-    body = driver.find_element_by_class_name("article-body")
-    candidates = body.find_elements_by_xpath(".//*")
-
-    for candidate in candidates[:10]:
-        text = candidate.text.strip()
-        words = re.split(r"\s+", text)
-
-        if len(words) >= 3 and re.search(r"\d{1,2}", words[0]) and re.search(r"\d{4}", words[2]):
-            if len(words[0]) == 1:
-                words[0] = "0" + words[0]
-
-            date = words[2] + long_months[words[1].lower()] + words[0]
-            date = re.sub(r"\D", "", date) + "0000"
-            break
-
-    return date
 
 
 def scrape():
@@ -70,9 +64,16 @@ def scrape():
     for article in articles:
         driver = get_page(driver, article)
 
+        # All links are unfortunately not guaranteed to work...
+        if driver.title == "404 | Minecraft":
+            continue
+
         link = article
-        date = get_date(driver)
-        title = driver.find_element_by_class_name("article-title").text
+        date_parts = driver.find_element_by_class_name("pubDate").text.split('/')
+        date = date_parts[2] + date_parts[0] + date_parts[1] + "0000"
+        title = driver.find_element_by_xpath('//*[@id="main-content"]/div[3]/div[1]/div/div/div/h1').text
+        image = driver.find_element_by_class_name("article-head__image").get_attribute("src")
+        image = image + ".transform/minecraft-image-large/image.jpg"
 
         if date is None:
             continue
