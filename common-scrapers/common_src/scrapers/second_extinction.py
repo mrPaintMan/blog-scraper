@@ -27,7 +27,6 @@ def scrape():
         link = base_site + post.find("a").get("href")
         alt_image = ALT_IMAGE
         image = base_site + post.find("picture").find("img").get("src").replace(" ", "%20")
-        print(image)
 
         data.append(Post(None, date, title, link, image, alt_image, SOURCE_CODE, None))
 
