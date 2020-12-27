@@ -24,13 +24,13 @@ def scrape():
     soup = make_soup(WEBSITE)
     base_site = "https://windboundgame.com"
     data = []
+
     for post in soup.find_all("div", {"class": "card--news"}):
         date = get_date(post.find("p").text.strip())
         title = post.find("h3").text.strip()
         link = base_site + post.find("a").get("href")
         alt_image = ALT_IMAGE
-        image = post.findAll("img")[0].get("src").replace(" ", "%20")
-        print(image)
+        image = base_site + post.findAll("img")[0].get("src").replace(" ", "%20")
 
         data.append(Post(None, date, title, link, image, alt_image, SOURCE_CODE, None))
 

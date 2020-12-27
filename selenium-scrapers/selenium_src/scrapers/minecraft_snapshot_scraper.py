@@ -34,6 +34,10 @@ def get_articles(articles, driver):
                 if re.search(r"\d$", modified_href):
                     modified_href = modified_href[0:-1] + "1"
 
+            # Attempt to remove junk chars ('-' for instance)
+            if re.search(r"[^a-zA-Z0-9]$", modified_href):
+                modified_href = modified_href[0:-1]
+
             # Replace the last word-char in the link with 'a'
             if re.search(r"\d[a-zA-Z]$", modified_href):
                 modified_href = modified_href[0:-1] + "a"

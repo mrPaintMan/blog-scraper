@@ -30,6 +30,7 @@ def get_image(link):
 def scrape():
     soup = make_soup(WEBSITE)
     data = []
+
     for post in soup.find_all("div", {"class": "post-content"}):
         date = post.find("p").text.strip().replace('-', '')
         title = post.find("h4").text.strip()
