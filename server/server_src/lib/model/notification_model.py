@@ -5,7 +5,7 @@ SELECT_ALL_SQL = """
                  FROM notifications
                  JOIN posts ON notifications.post_id = posts.post_id
                  """
-DELETE_BY_IDS = "DELETE FROM notifications WHERE n_id = ANY(%s) RETURNING n_id"
+DELETE_BY_IDS = "DELETE FROM notifications WHERE n_id = ANY (%s) RETURNING n_id"
 
 
 def get_all(db):

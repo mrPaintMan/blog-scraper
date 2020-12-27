@@ -12,10 +12,6 @@ class Post(Resource):
         cls.decorators = [auth.login_required]
         return cls
 
-    @staticmethod
-    def post(post_id):
-        return {"status": "404 - Resource not found."}, 404
-
     def get(self, post_id):
         try:
             p_id = int(post_id)
@@ -42,14 +38,6 @@ class Post(Resource):
             "data": posts
         }
 
-    @staticmethod
-    def put(post_id):
-        return {"status": "404 - Resource not found."}, 404
-
-    @staticmethod
-    def delete(post_id):
-        return {"status": "404 - Resource not found."}, 404
-
 
 class PostList(Resource):
 
@@ -58,10 +46,6 @@ class PostList(Resource):
         cls.db = Db(host)
         cls.decorators = [auth.login_required]
         return cls
-
-    @staticmethod
-    def post():
-        return {"status": "404 - Resource not found."}, 404
 
     def get(self):
 
@@ -92,7 +76,3 @@ class PostList(Resource):
             "status": "200 - Ok",
             "data": posts
         }
-
-    @staticmethod
-    def put():
-        return {"status": "404 - Resource not found."}, 404
