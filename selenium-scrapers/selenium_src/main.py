@@ -7,7 +7,8 @@ from selenium_src.scrapers import *
 
 SCRAPERS = {
     "dayz": dayz_scraper,
-    "minecraft_snapshot": minecraft_snapshot_scraper
+    "minecraft_snapshot": minecraft_snapshot_scraper,
+    "grounded": grounded_scraper
 }
 
 if "ENV" in os.environ:
