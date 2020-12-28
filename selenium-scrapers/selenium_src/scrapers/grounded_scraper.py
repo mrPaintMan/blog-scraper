@@ -9,7 +9,7 @@ from selenium_src.scrapers.abstract_scraper import get_driver, long_months, get_
 SOURCE_CODE = "grounded"
 WEBSITE = "https://grounded.obsidian.net/"
 PROFILE_IMAGE = "https://pbs.twimg.com/profile_images/1228034225896488960/nLHFQkdS_400x400.jpg"
-AlT_IMAGE = "https://twitter.com/GroundedTheGame/header_photo"
+AlT_IMAGE = "https://pbs.twimg.com/profile_banners/1198662953467174912/1605057069/1500x500"
 FILENAME = "../resources/data/grounded.txt"
 
 
