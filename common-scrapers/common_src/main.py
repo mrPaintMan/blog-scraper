@@ -9,7 +9,8 @@ SCRAPERS = {
     "gen_zero": gen_zero_scraper,
     "no_mans_sky": no_mans_sky_scraper,
     "windbound": windbound_scraper,
-    "second_extinction": second_extinction
+    "second_extinction": second_extinction,
+    "among_us": among_us_scraper
 }
 
 if "ENV" in os.environ:
