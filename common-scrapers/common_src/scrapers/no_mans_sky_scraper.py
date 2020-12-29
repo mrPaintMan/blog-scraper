@@ -1,6 +1,6 @@
 from common_src.lib.model.post import Post
 from common_src.lib.model.source import Source
-from common_src.scrapers.abstract_scraper import make_soup, MONTHS
+from common_src.scrapers.abstract_scraper import make_soup, MONTHS, remove_date_dups
 
 SOURCE_CODE = "no_mans_sky"
 WEBSITE = "https://www.nomanssky.com/news/"
@@ -25,20 +25,6 @@ def conform_date(string):
         day = "0" + day
 
     return year + month + day + "0000"
-
-
-def remove_date_dups(data):
-    temp_list = []
-    for post in data:
-        if post.ext_id not in temp_list:
-            temp_list.append(post.ext_id)
-
-        else:
-            int_date = int(post.ext_id)
-            int_date = int_date + 1
-            post.ext_id = str(int_date)
-
-    return data
 
 
 def get_image(text_with_image):
@@ -73,6 +59,4 @@ def scrape():
         else:
             current_site = None
 
-    data = remove_date_dups(data)
-
-    return data
+    return remove_date_dups(data)

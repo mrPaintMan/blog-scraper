@@ -17,7 +17,7 @@ SELECT_SOURCE_PAG_SQL = """
                             SELECT * FROM (
                                 SELECT *, ROW_NUMBER() OVER(ORDER BY ext_id DESC)
                                 FROM posts
-                                WHERE source_code = %s
+                                WHERE source_code = ANY (%s)
                             ) as x
                             WHERE row_number > %s * 10
                             LIMIT 10
@@ -45,7 +45,11 @@ def get_pag(db, pagination):
 
 
 def get_pag_by_source(db, pagination, sourcecode):
-    data = db.execute(SELECT_SOURCE_PAG_SQL, (sourcecode, pagination))
+    sourcecodes = [sourcecode]
+    if sourcecode.__contains__(','):
+        sourcecodes = sourcecode.split(',')
+
+    data = db.execute(SELECT_SOURCE_PAG_SQL, ((sourcecodes,), pagination))
     result = []
 
     for post in data:
