@@ -63,5 +63,5 @@ def scrape():
             title = title[0:60] + "..."
 
         data.append(Post(None, conform_date(date), title, link, image, AlT_IMAGE, SOURCE_CODE, None))
-        print(title)
+
     return remove_date_dups(data)
