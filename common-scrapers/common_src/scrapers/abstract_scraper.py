@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from bs4 import BeautifulSoup
 import urllib
 import urllib.request
@@ -21,6 +23,10 @@ MONTHS = {
     "november": "11",
     "december": "12"
 }
+
+
+def now():
+    return datetime.now().strftime("%X:%f")[:-4] + "\t"
 
 
 def make_soup(url):

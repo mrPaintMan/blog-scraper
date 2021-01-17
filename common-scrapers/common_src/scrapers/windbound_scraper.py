@@ -1,6 +1,6 @@
 from common_src.lib.model.post import Post
 from common_src.lib.model.source import Source
-from common_src.scrapers.abstract_scraper import make_soup
+from common_src.scrapers.abstract_scraper import make_soup, now
 
 SOURCE_CODE = "windbound"
 WEBSITE = "https://windboundgame.com/news"
@@ -33,5 +33,8 @@ def scrape():
         image = base_site + post.findAll("img")[0].get("src").replace(" ", "%20")
 
         data.append(Post(None, date, title, link, image, alt_image, SOURCE_CODE, None))
+
+        if len(data) % 25 == 0:
+            print(now() + f"Processed {len(data)} posts")
 
     return data

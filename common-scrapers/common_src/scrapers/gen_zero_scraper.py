@@ -1,6 +1,8 @@
+from datetime import datetime
+
 from common_src.lib.model.post import Post
 from common_src.lib.model.source import Source
-from common_src.scrapers.abstract_scraper import make_soup
+from common_src.scrapers.abstract_scraper import make_soup, now
 
 SOURCE_CODE = "gen_zero"
 WEBSITE = "https://generationzero.com/en/blog"
@@ -39,5 +41,8 @@ def scrape():
         image = get_image(link)
 
         data.append(Post(None, date + "0000", title, link, image, alt_image, SOURCE_CODE, None))
+
+        if len(data) % 25 == 0:
+            print(now() + f"Processed {len(data)} posts")
 
     return data

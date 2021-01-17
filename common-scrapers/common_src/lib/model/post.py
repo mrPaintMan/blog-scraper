@@ -24,8 +24,8 @@ class Post:
     def __init__(self, post_id, ext_id, title, link, image, alt_image, source_code, created):
         self.post_id = post_id
         self.ext_id = ext_id
-        self.title = title.replace("'", "''")
-        self.link = link.replace("'", "''")
+        self.title = title
+        self.link = link
         self.image = image
         self.alt_image = alt_image
         self.source_code = source_code

@@ -1,6 +1,6 @@
 from common_src.lib.model.post import Post
 from common_src.lib.model.source import Source
-from common_src.scrapers.abstract_scraper import make_soup, MONTHS, remove_date_dups
+from common_src.scrapers.abstract_scraper import make_soup, MONTHS, remove_date_dups, now
 
 SOURCE_CODE = "no_mans_sky"
 WEBSITE = "https://www.nomanssky.com/news/"
@@ -50,7 +50,9 @@ def scrape():
 
             data.append(Post(None, date, title, link, image, alt_image, SOURCE_CODE, None))
 
-        print(f"Processed {len(data)} posts")
+            if len(data) % 25 == 0:
+                print(now() + f"Processed {len(data)} posts")
+
         next_site_div = soup.find("a", {"class": "next"})
 
         if next_site_div is not None:

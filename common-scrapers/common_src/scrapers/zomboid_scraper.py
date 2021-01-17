@@ -1,6 +1,6 @@
 from common_src.lib.model.post import Post
 from common_src.lib.model.source import Source
-from common_src.scrapers.abstract_scraper import make_soup, MONTHS, remove_date_dups
+from common_src.scrapers.abstract_scraper import make_soup, MONTHS, remove_date_dups, now
 
 SOURCE_CODE = "zomboid"
 WEBSITE = "https://projectzomboid.com/blog/news/"
@@ -51,7 +51,7 @@ def scrape():
             data.append(Post(None, date, title, link, image, alt_image, SOURCE_CODE, None))
 
             if len(data) % 50 == 0:
-                print(f"Processed {len(data)} posts")
+                print(now() + f"Processed {len(data)} posts")
 
         next_site_div = soup.find("a", {"class": "next"})
 
