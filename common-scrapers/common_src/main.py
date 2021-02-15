@@ -10,7 +10,8 @@ SCRAPERS = {
     "no_mans_sky": no_mans_sky_scraper,
     "windbound": windbound_scraper,
     "second_extinction": second_extinction,
-    "among_us": among_us_scraper
+    "among_us": among_us_scraper,
+    "zomboid": zomboid_scraper
 }
 
 if "ENV" in os.environ:

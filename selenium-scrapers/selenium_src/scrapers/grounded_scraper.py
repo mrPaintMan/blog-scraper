@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium_src.lib.model.post import Post
 from selenium_src.lib.model.source import Source
 
-from selenium_src.scrapers.abstract_scraper import get_driver, long_months, get_page, remove_date_dups
+from selenium_src.scrapers.abstract_scraper import get_driver, long_months, get_page, remove_dups, now
 
 SOURCE_CODE = "grounded"
 WEBSITE = "https://grounded.obsidian.net/"
@@ -38,9 +38,16 @@ def scrape():
     data = []
 
     xpath_to_pag = "/html/body/div/main/div/section[2]/div/div[1]/div[2][@class='pagination']/button"
+    xpath_to_cookie_consent = "/html/body/div[2]/div/button"
 
     # Wait for page to load
     WebDriverWait(driver, 5).until(ec.element_to_be_clickable((By.XPATH, xpath_to_pag)))
+
+    cookie_consent = driver.find_element_by_xpath(xpath_to_cookie_consent)
+
+    if cookie_consent is not None:
+        cookie_consent.click()
+        WebDriverWait(driver, 5).until_not(ec.invisibility_of_element((By.XPATH, xpath_to_cookie_consent)))
 
     # Click the "load more" button until it disappears
     while True:
@@ -63,5 +70,8 @@ def scrape():
             title = title[0:60] + "..."
 
         data.append(Post(None, conform_date(date), title, link, image, AlT_IMAGE, SOURCE_CODE, None))
-        print(title)
-    return remove_date_dups(data)
+
+        if len(data) % 25 == 0:
+            print(now() + f"Processed {len(data)} posts")
+
+    return remove_dups(data)

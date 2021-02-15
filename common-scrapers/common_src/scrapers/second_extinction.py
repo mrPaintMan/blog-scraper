@@ -1,6 +1,6 @@
 from common_src.lib.model.post import Post
 from common_src.lib.model.source import Source
-from common_src.scrapers.abstract_scraper import make_soup, remove_date_dups
+from common_src.scrapers.abstract_scraper import make_soup, remove_dups, now
 
 SOURCE_CODE = "second_extinction"
 WEBSITE = "https://www.secondextinctiongame.com/news"
@@ -30,4 +30,7 @@ def scrape():
 
         data.append(Post(None, date, title, link, image, alt_image, SOURCE_CODE, None))
 
-    return remove_date_dups(data)
+        if len(data) % 25 == 0:
+            print(now() + f"Processed {len(data)} posts")
+
+    return remove_dups(data)
