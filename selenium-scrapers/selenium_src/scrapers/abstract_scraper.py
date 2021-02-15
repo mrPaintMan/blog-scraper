@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from selenium import webdriver
 
 user_agent_iteration = 1
@@ -33,6 +35,10 @@ short_months = {
 }
 
 
+def now():
+    return datetime.now().strftime("%X:%f")[:-4] + "\t"
+
+
 def get_driver():
     user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " \
         "AppleWebKit/537.36 (KHTML, like Gecko) " \
@@ -64,15 +70,21 @@ def get_page(driver, website):
     return driver
 
 
-def remove_date_dups(data):
-    temp_list = []
+def remove_dups(data):
+    extid_list = []
+    link_list = []
+    refined_data = []
     for post in data:
-        if post.ext_id not in temp_list:
-            temp_list.append(post.ext_id)
+        if post.ext_id not in extid_list:
+            extid_list.append(post.ext_id)
 
         else:
             int_date = int(post.ext_id)
             int_date = int_date + 1
             post.ext_id = str(int_date)
 
-    return data
+        if post.link not in link_list:
+            link_list.append(post.link)
+            refined_data.append(post)
+
+    return refined_data

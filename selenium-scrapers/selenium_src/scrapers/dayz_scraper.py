@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium_src.lib.model.post import Post
 from selenium_src.lib.model.source import Source
 
-from selenium_src.scrapers.abstract_scraper import get_driver, short_months, get_page
+from selenium_src.scrapers.abstract_scraper import get_driver, short_months, get_page, remove_dups, now
 
 SOURCE_CODE = "dayz"
 WEBSITE = "https://dayz.com/search?rowsPerPage=5"
@@ -58,6 +58,9 @@ def scrape():
 
             data.append(Post(None, conform_date(date), title, link, image, AlT_IMAGE, SOURCE_CODE, None))
 
+            if len(data) % 20 == 0:
+                print(now() + f"Processed {len(data)} posts")
+
         if "paginate__item--arrow-disabled" not in pagination.get_attribute("class"):
             pagination.find_element_by_class_name("butn").click()
             WebDriverWait(driver, 5).until_not(
@@ -70,4 +73,4 @@ def scrape():
         else:
             break
 
-    return data
+    return remove_dups(data)

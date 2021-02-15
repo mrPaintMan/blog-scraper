@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium_src.lib.model.post import Post
 from selenium_src.lib.model.source import Source
 
-from selenium_src.scrapers.abstract_scraper import get_driver, long_months, get_page, remove_date_dups
+from selenium_src.scrapers.abstract_scraper import get_driver, long_months, get_page, remove_dups, now
 
 SOURCE_CODE = "grounded"
 WEBSITE = "https://grounded.obsidian.net/"
@@ -71,4 +71,7 @@ def scrape():
 
         data.append(Post(None, conform_date(date), title, link, image, AlT_IMAGE, SOURCE_CODE, None))
 
-    return remove_date_dups(data)
+        if len(data) % 25 == 0:
+            print(now() + f"Processed {len(data)} posts")
+
+    return remove_dups(data)

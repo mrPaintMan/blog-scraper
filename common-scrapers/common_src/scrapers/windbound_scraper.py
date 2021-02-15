@@ -1,6 +1,6 @@
 from common_src.lib.model.post import Post
 from common_src.lib.model.source import Source
-from common_src.scrapers.abstract_scraper import make_soup, now
+from common_src.scrapers.abstract_scraper import make_soup, now, remove_dups
 
 SOURCE_CODE = "windbound"
 WEBSITE = "https://windboundgame.com/news"
@@ -37,4 +37,4 @@ def scrape():
         if len(data) % 25 == 0:
             print(now() + f"Processed {len(data)} posts")
 
-    return data
+    return remove_dups(data)

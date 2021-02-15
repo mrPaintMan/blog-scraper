@@ -56,18 +56,24 @@ def make_local_soup():
     return BeautifulSoup(the_page, "html.parser")
 
 
-def remove_date_dups(data):
-    temp_list = []
+def remove_dups(data):
+    extid_list = []
+    link_list = []
+    refined_data = []
     for post in data:
-        if post.ext_id not in temp_list:
-            temp_list.append(post.ext_id)
+        if post.ext_id not in extid_list:
+            extid_list.append(post.ext_id)
 
         else:
             int_date = int(post.ext_id)
             int_date = int_date + 1
             post.ext_id = str(int_date)
 
-    return data
+        if post.link not in link_list:
+            link_list.append(post.link)
+            refined_data.append(post)
+
+    return refined_data
 
 
 def match_data(data):

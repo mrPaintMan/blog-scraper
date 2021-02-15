@@ -1,6 +1,6 @@
 from common_src.lib.model.post import Post
 from common_src.lib.model.source import Source
-from common_src.scrapers.abstract_scraper import make_soup, MONTHS, remove_date_dups, now
+from common_src.scrapers.abstract_scraper import make_soup, MONTHS, remove_dups, now
 
 SOURCE_CODE = "zomboid"
 WEBSITE = "https://projectzomboid.com/blog/news/"
@@ -61,4 +61,4 @@ def scrape():
         else:
             current_site = None
 
-    return remove_date_dups(data)
+    return remove_dups(data)

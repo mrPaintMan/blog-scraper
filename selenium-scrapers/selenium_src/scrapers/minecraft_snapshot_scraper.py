@@ -1,6 +1,6 @@
 from selenium_src.lib.model.post import Post
 from selenium_src.lib.model.source import Source
-from selenium_src.scrapers.abstract_scraper import get_driver, get_page
+from selenium_src.scrapers.abstract_scraper import get_driver, get_page, remove_dups, now
 
 import re
 
@@ -85,6 +85,6 @@ def scrape():
         data.append(Post(None, date, title, link, image, ALT_IMAGE, SOURCE_CODE, None))
 
         if len(data) % 10 == 0:
-            print(f"Scraped {len(data)} entries.")
+            print(now() + f"Scraped {len(data)} entries.")
 
-    return data
+    return remove_dups(data)
