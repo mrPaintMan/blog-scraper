@@ -3,7 +3,7 @@ __all__ = [
     "gen_zero_scraper",
     "no_mans_sky_scraper",
     "windbound_scraper",
-    "second_extinction",
+    "second_extinction_scraper",
     "among_us_scraper",
     "zomboid_scraper"
 ]

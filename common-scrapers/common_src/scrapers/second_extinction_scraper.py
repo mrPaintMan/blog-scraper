@@ -20,7 +20,7 @@ def scrape():
     base_site = "https://www.secondextinctiongame.com"
     data = []
 
-    for post in soup.findAll("article", {"class": "cgYILD"}):
+    for post in soup.findAll("section")[1].findAll("article"):
 
         date = post.find("time").text.replace("-", "") + "0000"
         title = post.find("h3").text.strip()

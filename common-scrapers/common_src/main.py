@@ -9,57 +9,64 @@ SCRAPERS = {
     "gen_zero": gen_zero_scraper,
     "no_mans_sky": no_mans_sky_scraper,
     "windbound": windbound_scraper,
-    "second_extinction": second_extinction,
+    "second_extinction": second_extinction_scraper,
     "among_us": among_us_scraper,
     "zomboid": zomboid_scraper
 }
 
 if "ENV" in os.environ:
     ENV = os.environ["ENV"]
-    scraper = SCRAPERS[os.environ["SCRAPER"]]
+    scraper_name = os.environ["SCRAPER"]
     host = "host.docker.internal" if "HOST" not in os.environ else os.environ["HOST"]
 
 elif len(sys.argv) >= 3:
     ENV = sys.argv[1]
-    scraper = SCRAPERS[sys.argv[2]]
+    scraper_name = sys.argv[2]
     host = sys.argv[3]
 
 else:
     raise Exception("No environment variables found.")
 
 print(f"Using {host} as host.")
-db = db.Db(host)
+db = db.Db(host, scraper_name)
+scraper = SCRAPERS[scraper_name]
 
 source = scraper.get_source()
 print(f"Using {source.source_code} scraper.")
 source.save(db)
 db.commit()
 
-posts = scraper.scrape()
-posts.reverse()  # To make the oldest post iterated first
-newPosts = []
 
-print(f"Scraped {len(posts)} entries.")
-for post in posts:
-    post.match(db)
+def main():
+    posts = scraper.scrape()
+    posts.reverse()  # To make the oldest post iterated first
+    new_posts = []
 
-    if post.post_id == 0 or post.post_id is None:
-        post.post_id = post.save(db)
-        newPosts.append(post)
+    print(f"Scraped {len(posts)} entries.")
+    for post in posts:
+        post.match(db)
 
-    else:
-        post.save(db)
+        if post.post_id == 0 or post.post_id is None:
+            post.post_id = post.save(db)
+            new_posts.append(post)
 
-    db.commit()
+        else:
+            post.save(db)
 
-print(f"{len(newPosts)} new additions")
-for post in newPosts:
-    notification = Notification(None, post.post_id)
-    notification.save(db)
+        db.commit()
 
-db.commit()
+    print(f"{len(new_posts)} new additions")
+    if len(new_posts) > 0:
+        for post in new_posts:
+            notification = Notification(None, post.post_id)
+            notification.save(db)
 
-if len(newPosts) > 0:
-    push_notifications(ENV, host)
+        db.commit()
+        push_notifications(ENV, host)
 
-db.close()
+
+try:
+    main()
+
+finally:
+    db.close()
