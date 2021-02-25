@@ -18,7 +18,6 @@ def get_source():
 
 def get_alt_image():
     soup = make_soup(MEDIASITE)
-    print(BASESITE + soup.findAll("ul")[3].findAll("a", {"title": "Open large image"})[-1].get("href"))
     return BASESITE + soup.findAll("ul")[3].findAll("a", {"title": "Open large image"})[-1].get("href")
 
 
