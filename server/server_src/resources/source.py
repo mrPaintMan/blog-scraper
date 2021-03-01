@@ -7,7 +7,7 @@ class Source(Resource):
 
     @classmethod
     def setup(cls, host, auth):
-        cls.db = Db(host)
+        cls.db = Db(host, name="server-source")
         cls.decorators = [auth.login_required]
         return cls
 
@@ -33,7 +33,7 @@ class SourceList(Resource):
 
     @classmethod
     def setup(cls, host, auth):
-        cls.db = Db(host)
+        cls.db = Db(host, name="server-sources")
         cls.decorators = [auth.login_required]
         return cls
 

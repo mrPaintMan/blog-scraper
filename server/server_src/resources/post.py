@@ -8,7 +8,7 @@ class Post(Resource):
 
     @classmethod
     def setup(cls, host, auth):
-        cls.db = Db(host)
+        cls.db = Db(host, name="server-post")
         cls.decorators = [auth.login_required]
         return cls
 
@@ -43,7 +43,7 @@ class PostList(Resource):
 
     @classmethod
     def setup(cls, host, auth):
-        cls.db = Db(host)
+        cls.db = Db(host, name="server-posts")
         cls.decorators = [auth.login_required]
         return cls
 

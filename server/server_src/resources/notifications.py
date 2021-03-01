@@ -10,7 +10,7 @@ class Notifications(Resource):
 
     @classmethod
     def setup(cls, host, resource_path):
-        cls.db = Db(host)
+        cls.db = Db(host, name="server-notifications")
         cls.apns_cert = resource_path + "apns.crt.pem"
         cls.apns_key = resource_path + "apns.key.pem"
         return cls
