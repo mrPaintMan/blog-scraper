@@ -4,6 +4,7 @@ import sys
 from selenium_src.lib import db
 from selenium_src.lib.model.notification import Notification, push_notifications
 from selenium_src.scrapers import *
+from selenium_src.scrapers.abstract_scraper import remove_dups
 
 SCRAPERS = {
     "dayz": dayz_scraper,
@@ -35,7 +36,8 @@ db.commit()
 
 
 def main():
-    posts = scraper.scrape()
+    unfiltered_posts = scraper.scrape()
+    posts = remove_dups(unfiltered_posts)
     posts.reverse()  # To make the oldest post iterated first
     new_posts = []
 

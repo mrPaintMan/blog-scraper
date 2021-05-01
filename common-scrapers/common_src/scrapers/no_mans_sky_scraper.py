@@ -61,4 +61,4 @@ def scrape():
         else:
             current_site = None
 
-    return remove_dups(data)
+    return data

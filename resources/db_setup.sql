@@ -16,7 +16,7 @@ CREATE TABLE posts(
    alt_image VARCHAR (256),
    source_code VARCHAR (64) REFERENCES source_codes(source_code) NOT NULL,
    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-   UNIQUE (ext_id, source_code)
+   UNIQUE (ext_id, source_code, link)
 );
 
 CREATE TABLE notification_register(

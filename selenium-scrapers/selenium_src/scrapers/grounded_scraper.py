@@ -74,4 +74,4 @@ def scrape():
         if len(data) % 25 == 0:
             print(now() + f"Processed {len(data)} posts")
 
-    return remove_dups(data)
+    return data

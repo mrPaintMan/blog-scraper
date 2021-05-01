@@ -4,6 +4,7 @@ import sys
 from common_src.lib import db
 from common_src.lib.model.notification import Notification, push_notifications
 from common_src.scrapers import *
+from common_src.scrapers.abstract_scraper import remove_dups
 
 SCRAPERS = {
     "gen_zero": gen_zero_scraper,
@@ -38,7 +39,8 @@ db.commit()
 
 
 def main():
-    posts = scraper.scrape()
+    unfiltered_posts = scraper.scrape()
+    posts = remove_dups(unfiltered_posts)
     posts.reverse()  # To make the oldest post iterated first
     new_posts = []
 

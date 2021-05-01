@@ -69,7 +69,7 @@ def scrape():
         driver = get_page(driver, article)
 
         # All links are unfortunately not guaranteed to work...
-        if driver.title == "404 | Minecraft":
+        if driver.title == "404 | Minecraft" or driver.title == "":
             continue
 
         link = article
@@ -87,4 +87,4 @@ def scrape():
         if len(data) % 10 == 0:
             print(now() + f"Scraped {len(data)} entries.")
 
-    return remove_dups(data)
+    return data

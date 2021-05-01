@@ -73,4 +73,4 @@ def scrape():
         else:
             break
 
-    return remove_dups(data)
+    return data

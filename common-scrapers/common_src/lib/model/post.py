@@ -17,7 +17,7 @@ class Post:
     SELECT_SQL = """
                     SELECT post_id, ext_id, title, link, image, alt_image, source_code, created 
                     FROM posts 
-                    WHERE ext_id = %s AND source_code = %s
+                    WHERE link = %s AND source_code = %s
                  """
     DELETE_SQL = "DELETE FROM posts WHERE post_id = %s RETURNING post_id"
 
@@ -61,14 +61,11 @@ class Post:
     def delete(self, db):
         return db.execute(self.DELETE_SQL, self.post_id)[0][0]
 
-    def get_by_ext_id_and_source(self, db):
-        return db.execute(self.SELECT_SQL, (self.ext_id, self.source_code))
-
     def match(self, db):
-        data = db.execute(self.SELECT_SQL, (self.ext_id, self.source_code))
+        data = db.execute(self.SELECT_SQL, (self.link, self.source_code))
         if data is not None and len(data) == 1:
             self.post_id = data[0][0]
             self.created = data[0][7]
 
         elif data is not None and len(data) > 1:
-            raise Exception(f"Multiple rows for ext_id: {self.ext_id} and source_code {self.source_code}")
+            raise Exception(f"Multiple rows for link: {self.link} and source_code {self.source_code}")
