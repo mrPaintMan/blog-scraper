@@ -1,3 +1,4 @@
+from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
@@ -62,6 +63,14 @@ def scrape():
                 print(now() + f"Processed {len(data)} posts")
 
         if "paginate__item--arrow-disabled" not in pagination.get_attribute("class"):
+
+            cookies_xpath = '/html/body/section/div[1]/div[1]/div[2]/button[1]'
+            cookie_btn = driver.find_element_by_xpath(cookies_xpath)
+
+            # Get rid of cookie header
+            if cookie_btn is not None and 'Allow all cookies' == cookie_btn.text:
+                driver.find_element_by_xpath(cookies_xpath).click()
+
             pagination.find_element_by_class_name("butn").click()
             WebDriverWait(driver, 5).until_not(
                 ec.text_to_be_present_in_element(

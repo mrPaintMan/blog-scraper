@@ -72,8 +72,14 @@ def get_page(driver, website):
 
 def remove_dups(posts):
     link_list = []
+    ext_id_list = []
     refined_posts = []
     for post in posts:
+        if post.ext_id in ext_id_list:
+            post.ext_id = str(int(post.ext_id) + 1)
+
+        ext_id_list.append(post.ext_id)
+
         if post.link not in link_list:
             link_list.append(post.link)
             refined_posts.append(post)
